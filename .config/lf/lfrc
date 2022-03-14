@@ -1,14 +1,15 @@
 # Basic vars
 set shellopts '-eu'
 set ifs "\n"
-set scrolloff 8
-set icons
-set drawbox
-set period 1
-set cleaner '~/.config/lf/cleaner'
-set previewer '~/.config/lf/preview'
-set preview
 set ignorecase true
+set period 1
+set scrolloff 8
+set ratios 1:3:4
+set drawbox
+set icons
+set preview
+set previewer '~/.config/lf/preview'
+set cleaner '~/.config/lf/cleaner'
 
 # cmds/functions
 %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
@@ -24,10 +25,12 @@ cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx)
 
 cmd open-with %"$@" $f
 
+#archives
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relative-to=$PWD -- $fx)
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
 cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
+#oaste, but don't overwrite or rename
 cmd pasteinsert &{{
     set -- $(cat ~/.local/share/lf/files)
     mode="$1"
@@ -79,22 +82,25 @@ cmd symlink %{{
 }}
 
 # Bindings
+map w
 map DD trash
 map <c-r> reload
 map <backspace> set hidden!
 map <backspace2> set hidden!
-map w
+#shell
 map s shell
 map S $$SHELL
 map @ push :%<space>"$f"<home><c-f>
+#file handling
+map e
+map E $$EDITOR "$f"
 map r $mimeopen --ask $f
 map R $mimeopen -d $f
 #execute file
 map x $$f
 map X !$f
-map e
-map E $$EDITOR "$f"
 
+# tmux keybinds
 map ee $tmux split-window -v $EDITOR "$f"
 map eE $tmux split-window -h $EDITOR "$f"
 map es $tmux split-window -v -c "$PWD"
@@ -104,6 +110,7 @@ map eV $tmux split-window -h -c "$PWD" ~/Programs/lfub
 map ew $tmux new-window -c "$PWD"
 map eW $tmux new-window -c "$PWD" ~/Programs/lfub
 
+# goto keybinds
 map gi $lf -remote "send $id cd /run/media/$USER"
 map gm cd /media
 map gr cd /
@@ -116,39 +123,45 @@ map gp cd /tmp
 map gu cd /usr
 map gv cd /var
 
+# new file/folder keybinds
 map <f-7> push :mkdir<space>
 map <insert> push :touch<space>
 
-map A rename # at the very end
+# rename keybinds
 map c
+map A rename # at the very end
 #map cw push A<c-u> # new rename
-# rename, vimv if several items are selected
+#smartbulkrename, vimv if several items are selected
 map cw $set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&vimv $(realpath --relative-to=$PWD -- $fx)&&exit 0;lf -remote "send $id push A<c-u>"
 map I push A<c-a> # at the very beginning
 map a push A<a-b><c-b> # before extention
 
+# undo keybinds
 map u
 map uv unselect
 map uy clear
 map um %umount -l -- "$f"
 
+# yank/cut keybinds
 map y
+map d
 map yy copy
 map yp $printf "%s" "$fx" | xclip -selection clipboard
 map yn $basename -a -- $fx | head -c-1 | xclip -i -selection clipboard
-map d
 map dd cut
 map du !clear&&du --max-depth=1 -h --apparent-size
 map dU !clear&&du --max-depth=1 -h --apparent-size | sort -rh
 map df !clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "
 
+# paste keybinds
 map p
+map pp paste
 map pi pasteinsert
 map po pasteoverwrite
-map pp paste
 map pl symlink relative
 map pL symlink absolute
 
+# sort keybinds
 map sn
 map ss
 map st
@@ -157,15 +170,16 @@ map sc
 map se
 
 map o
+map zr
 map on :set sortby natural; set info
 map os :set sortby size; set info size
 map om :set sortby time; set info time
 map oa :set sortby atime; set info atime
 map oc :set sortby ctime; set info ctime
 map oe :set sortby ext; set info
-map zr
 map or :set reverse!
 
+# chmod keybinds
 map +X $chmod +X "$f"
 map +r $chmod +r "$f"
 map +s $chmod +s "$f"
