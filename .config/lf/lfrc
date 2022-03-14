@@ -13,7 +13,7 @@ set ignorecase true
 # cmds/functions
 %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
 
-cmd mkdir $mkdir -p "$(echo $* | tr ' ' '\ ')"
+cmd mkdir $mkdir -p -- "$(echo $* | tr ' ' '\ ')"
 cmd touch $:>> "$(echo $* | tr ' ' '\ ')"
 cmd chmod $set -f&&for file in "$fx";do chmod $* $file;done&&lf -remote 'send reload'
 
