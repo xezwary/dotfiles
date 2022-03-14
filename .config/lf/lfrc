@@ -1,10 +1,12 @@
-# Basic vars
+# This config basically turns lf into Ranger with added features that I like.
+
+# basic vars
 set shellopts '-eu'
 set ifs "\n"
 set ignorecase true
 set period 1
 set scrolloff 8
-set ratios 1:3:4
+set ratios 2:5:7
 set drawbox
 set icons
 set preview
@@ -30,41 +32,32 @@ cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relativ
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
 cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
-#oaste, but don't overwrite or rename
-cmd pasteinsert &{{
-    set -- $(cat ~/.local/share/lf/files)
-    mode="$1"
-    shift
-    case "$mode" in
-        copy)
-            rsync -av --ignore-existing --progress -- "$@" . |
-            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo $line"
-            done
-            ;;
-        move) mv -n -- "$@" .;;
-    esac
-    rm ~/.local/share/lf/files
-    lf -remote "send clear"
-}}
-
-cmd pasteoverwrite &{{
-    set -- $(cat ~/.local/share/lf/files)
-    mode="$1"
-    shift
-    case "$mode" in
-        copy)
-            rsync -av --ignore-times --progress -- "$@" . |
-            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
-            while IFS= read -r line; do
-                lf -remote "send $id echo $line"
-            done
-        ;;
-        move) mv -f -- "$@" .;;
-    esac
-    rm ~/.local/share/lf/files
-    lf -remote "send clear"
+#paste, with option for don't overwrite or rename
+cmd pasteand &{{
+  overwrite="$1"
+  set -- $(cat ~/.local/share/lf/files)
+  mode="$1"
+  shift
+  case "$mode" in
+    copy)
+      if [ $overwrite == 'insert' ]; then
+        rsync -av --ignore-existing --progress -- "$@" . |
+        stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+        while IFS= read -r line; do
+          lf -remote "send $id echo $line"
+        done
+      else
+        rsync -av --ignore-times --progress -- "$@" . |
+        stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+        while IFS= read -r line; do
+          lf -remote "send $id echo $line"
+        done
+      fi
+    ;;
+    move)[[ $overwrite == 'insert' ]]&&mv -n -- "$@" .||mv -f -- "$@" .;;
+  esac
+  rm ~/.local/share/lf/files
+  lf -remote "send clear"
 }}
 
 cmd symlink %{{
@@ -81,7 +74,7 @@ cmd symlink %{{
   lf -remote "send clear"
 }}
 
-# Bindings
+# bindings
 map w
 map DD trash
 map <c-r> reload
@@ -156,8 +149,8 @@ map df !clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "
 # paste keybinds
 map p
 map pp paste
-map pi pasteinsert
-map po pasteoverwrite
+map pi pasteand insert
+map po pasteand overwrite
 map pl symlink relative
 map pL symlink absolute
 
