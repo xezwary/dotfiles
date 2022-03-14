@@ -1,7 +1,7 @@
 # Basic vars
 set shellopts '-eu'
 set ifs "\n"
-set scrolloff 10
+set scrolloff 8
 set icons
 set drawbox
 set period 1
@@ -25,8 +25,8 @@ cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx)
 cmd open-with %"$@" $f
 
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relative-to=$PWD -- $fx)
-cmd extractaunpack !set -f&&aunpack -- $fx
-cmd extractunar !set -f&&unar -d -- $fx
+cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
+cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
 cmd pasteinsert &{{
     set -- $(cat ~/.local/share/lf/files)
