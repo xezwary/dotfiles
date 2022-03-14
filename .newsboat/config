@@ -1,0 +1,76 @@
+auto-reload yes
+suppress-first-reload yes
+reload-time 30
+reload-threads 4
+download-retries 4
+download-timeout 10
+download-path "~/Downloads/newsboat"
+max-items 4000
+prepopulate-query-feeds yes
+notify-format "%d new articles"
+notify-program "/usr/bin/notify-send"
+show-read-feeds yes
+scrolloff 10
+confirm-mark-feed-read no
+confirm-exit yes
+
+bookmark-cmd "/home/haakon/.newsboat/bookmark.sh"
+bookmark-interactive no
+bookmark-autopilot yes
+
+feed-sort-order none
+browser ~/scripts/bash/commands/xclipit.sh
+player mpv
+
+bind-key j down
+bind-key k up
+bind-key j down feedlist
+bind-key k up feedlist
+bind-key j next articlelist
+bind-key k prev articlelist
+bind-key J next-feed articlelist
+bind-key K prev-feed articlelist
+bind-key j down article
+bind-key k up article
+bind-key G end
+bind-key g home
+bind-key d pagedown
+bind-key u pageup
+bind-key l open
+bind-key h quit
+bind-key a toggle-article-read
+bind-key b open-in-browser
+bind-key o sort
+bind-key O rev-sort
+bind-key m bookmark
+bind-key f goto-title
+bind-key e edit-flags
+bind-key F select-filter
+bind-key X clear-filter
+
+macro f set browser "firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro d set browser "~/Programs/firefox/firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro b set browser "brave %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro w set browser "w3m %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro e set browser "elinks %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro m set browser "~/scripts/bash/commands/mpv_youtubedl_quality.sh 2160 %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro n set browser "~/scripts/bash/commands/mpv_youtubedl_quality2.sh %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro t set browser "alacritty -e ~/scripts/bash/commands/mpv_youtubedl_quality3.sh 2160 %u &"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro p set browser "~/.newsboat/playlist.sh %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro x set browser "~/scripts/bash/commands/xclipit.sh %u"; open-in-browser
+
+define-filter "All feeds with 's' flag" "flags # \"s\""
+
+color listnormal color15 default
+color listfocus color0 color15 standout bold
+color listnormal_unread color208 default
+color listfocus_unread color208 color0 bold
+color info color15 color0 bold
+color article color15 default
+
+#color listnormal white default
+#color listfocus black white standout bold
+#color listnormal_unread yellow default
+#color listfocus_unread yellow black bold
+#color info white black bold
+#color article white default
