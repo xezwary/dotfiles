@@ -24,7 +24,7 @@ cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx)
 
 cmd open-with %"$@" $f
 
-cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relative-to=$PWD $fx)
+cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relative-to=$PWD -- $fx)
 cmd extractaunpack !set -f&&aunpack -- $fx
 cmd extractunar !set -f&&unar -d -- $fx
 
@@ -51,14 +51,21 @@ cmd pasteoverwrite &{{
     mode="$1"
     shift
     case "$mode" in
-        copy) \cp -af -- "$@" . ;;
+        copy)
+            rsync -av --ignore-times --progress -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+        ;;
         move) mv -f -- "$@" .;;
     esac
     rm ~/.local/share/lf/files
     lf -remote "send clear"
 }}
 
-cmd links %{{
+cmd symlink %{{
+  linktype=$1
   set -- $(cat ~/.local/share/lf/files)
   mode="$1"
   shift
@@ -66,20 +73,7 @@ cmd links %{{
     echo "no files to link"
     exit 0
   fi
-  ln -sr -t . -- "$@"
-  rm ~/.local/share/lf/files
-  lf -remote "send clear"
-}}
-
-cmd linkh %{{
-  set -- $(cat ~/.local/share/lf/files)
-  mode="$1"
-  shift
-  if [ "$#" -lt 1 ]; then
-    echo "no files to link"
-    exit 0
-  fi
-  ln -t . -- "$@"
+  [[ "$linktype" == "relative" ]]&&ln -sr -t . -- "$@"||ln -s -t . -- "$@"
   rm ~/.local/share/lf/files
   lf -remote "send clear"
 }}
@@ -152,8 +146,8 @@ map p
 map pi pasteinsert
 map po pasteoverwrite
 map pp paste
-map pl links
-map pL linkh
+map pl symlink relative
+map pL symlink absolute
 
 map sn
 map ss
