@@ -4,6 +4,8 @@
 set shellopts '-eu'
 set ifs "\n"
 set ignorecase true
+set incsearch
+set findlen 2
 set period 1
 set scrolloff 8
 set ratios 2:5:7
@@ -31,6 +33,22 @@ cmd open-with %"$@" $f
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath --relative-to=$PWD -- $fx)
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
 cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
+
+# Open handler
+cmd open ${{
+  case "$f" in
+    *.torrent) transadd "$f" ;;
+    *.7z) 7z -p l "$f" | "$PAGER" ;;
+    *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip) als -- "$f" | "$PAGER" ;;
+    *.iso) iso-info -l -i -- "$f" | "$PAGER" ;;
+    *) case $(file --mime-type $f -b) in
+      text/*|application/json|inode/x-empty) $EDITOR -- "$f" ;;
+      video/*) __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 & ;;
+      audio/*) mpv --audio-display=no -- "$f" ;;
+      *) mimeopen --ask "$f" ;;
+    esac
+  esac
+}}
 
 #paste, with option for don't overwrite or rename
 cmd pasteand &{{
@@ -86,8 +104,9 @@ map S $$SHELL
 map @ push :%<space>"$f"<home><c-f>
 #file handling
 map e
-map E $$EDITOR "$f"
-map r $mimeopen --ask $f
+map E $$EDITOR -- "$f"
+map r open
+#set default for opening file
 map R $mimeopen -d $f
 #execute file
 map x $$f
