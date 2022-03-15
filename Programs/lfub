@@ -20,7 +20,7 @@ else
     -e '/^[ \t]*$/d'       \
     -e 's/[ \t]\+/=/g')
   LF_ICONS=${LF_ICONS//$'\n'/:}
-  export LF_COLORS=".git/=01;97:.git*=97:*.gitignore=97:*Makefile=97:README.*=33:*.txt=37:*.jpeg=33:*.jpg=33:*.png=33:*.mp4=35:*.mkv=35:*.webm=35:*.avi=35:*.md=97:*.rar=31:*.zip=31:*.tar=31:*.gz=31:*.bz=31:*.bz2=31:*.7z=31:*.tgz=31:ln=01;36:di=1;94:ex=01;92:"
+  export LF_COLORS=".git/=01;97:.git*=97:*.gitignore=97:*Makefile=97:README.*=33:*.txt=37:*.jpeg=33:*.jpg=33:*.png=33:*.mp4=35:*.mkv=35:*.webm=35:*.avi=35:*.md=97:*.rar=31:*.zip=31:*.tar=31:*.gz=31:*.bz=31:*.bz2=31:*.7z=31:*.tgz=31:ln=01;36:di=1;94:tw=1;94:ow=1;94:st=1;94:ex=01;92:"
   export LF_ICONS
 	lf "$@" 3>&-
 fi

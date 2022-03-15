@@ -48,7 +48,7 @@ cmd open ${{
       text/*|application/json|inode/x-empty) $EDITOR -- "$f" ;;
       video/*) __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 & ;;
       audio/*) mpv --audio-display=no -- "$f" ;;
-      *) mimeopen --ask "$f" ;;
+      *) mimeopen --ask -- "$f" ;;
     esac
   esac
 }}
