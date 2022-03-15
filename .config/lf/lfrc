@@ -125,7 +125,8 @@ map c
 map A rename # at the very end
 #map cw push A<c-u> # new rename
 #smartbulkrename, vimv if several items are selected
-map cw $set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&vimv $(realpath --relative-to=$PWD -- $fx)&&exit 0;lf -remote "send $id push A<c-u>"
+map cw ${{#Smart bulk rename
+  set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&vimv $(realpath --relative-to=$PWD -- $fx)&&exit 0;lf -remote "send $id push A<c-u>"}}
 map I push A<c-a> # at the very beginning
 map a push A<a-b><c-b> # before extention
 
@@ -133,18 +134,25 @@ map a push A<a-b><c-b> # before extention
 map u
 map uv unselect
 map uy clear
-map um %umount -l -- "$f"
+map um %{{#Unmount
+  umount -l -- "$f"}}
 
 # yank/cut keybinds
 map y
 map d
 map yy copy
-map yp $printf "%s" "$fx" | xclip -selection clipboard
-map yn $basename -a -- $fx | head -c-1 | xclip -i -selection clipboard
+map yp ${{#Yank paths
+  printf "%s" "$fx" | xclip -selection clipboard}}
+map yn ${{#Yank filename
+  basename -a -- $fx | head -c-1 | xclip -i -selection clipboard}}
 map dd cut
-map du !clear&&du --max-depth=1 -h --apparent-size
-map dU !clear&&du --max-depth=1 -h --apparent-size | sort -rh
-map df !clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "
+#filespace
+map du !{{#Directory disk usage
+  clear&&du --max-depth=1 -h --apparent-size}}
+map dU !{{#Directory disk usage sorted
+  clear&&du --max-depth=1 -h --apparent-size | sort -rh}}
+map df !{{#File system space usage
+  clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "}}
 
 # paste keybinds
 map p
