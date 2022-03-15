@@ -245,6 +245,7 @@ Vagrantfile             
 *.swm   
 *.dwm   
 *.esd   
+*.iso   
 *.jpg   
 *.jpeg  
 *.mjpg  
