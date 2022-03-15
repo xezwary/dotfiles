@@ -41,6 +41,7 @@ cmd open ${{
     *.7z) 7z -p l "$f" | "$PAGER" ;;
     *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip) als -- "$f" | "$PAGER" ;;
     *.iso) iso-info -l -i -- "$f" | "$PAGER" ;;
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) [[ $(mediainfo $f|grep "Video"|wc -l) == 0 ]]&&mpv --audio-display=no -- "$f"||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 ;;
     *) case $(file --mime-type $f -b) in
       text/*|application/json|inode/x-empty) $EDITOR -- "$f" ;;
       video/*) __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 & ;;
