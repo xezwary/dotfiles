@@ -125,7 +125,7 @@ map eV $tmux split-window -h -c "$PWD" ~/Programs/lfub
 map ew $tmux new-window -c "$PWD"
 map eW $tmux new-window -c "$PWD" ~/Programs/lfub
 
-# goto keybinds
+# navigation keybinds
 map gi $lf -remote "send $id cd /run/media/$USER"
 map gm cd /media
 map gr cd /
@@ -137,6 +137,7 @@ map gs cd /srv
 map gp cd /tmp
 map gu cd /usr
 map gv cd /var
+map cd push :cd<space>
 
 # new file/folder keybinds
 map <f-7> push :mkdir<space>
@@ -156,6 +157,7 @@ map a push A<a-b><c-b> # before extention
 map u
 map uv unselect
 map uy clear
+map ud clear
 map um %{{#Unmount
   umount -l -- "$f"}}
 
