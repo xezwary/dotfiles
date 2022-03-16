@@ -46,7 +46,7 @@ cmd open ${{
     #video/audio
     *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) [[ $(mediainfo -- "$f"|grep "Video"|wc -l) == 0 ]]&&mpv --audio-display=no -- "$f"||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 ;;
     #images
-    *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico) feh -- "$f" & ;;
+    *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga) feh -- "$f" & ;;
     *.gif) sxiv -- "$f" & ;;
     *) case $(file --mime-type $f -b) in
       #text
@@ -215,16 +215,16 @@ map oe :set sortby ext; set info
 map or :set reverse!
 
 # chmod keybinds
-map +X $chmod +X "$f"
-map +r $chmod +r "$f"
-map +s $chmod +s "$f"
-map +t $chmod +t "$f"
-map +w $chmod +w "$f"
-map +x $chmod +x "$f"
+map +X $chmod +X "$f";lf -remote "send $id reload"
+map +r $chmod +r "$f";lf -remote "send $id reload"
+map +s $chmod +s "$f";lf -remote "send $id reload"
+map +t $chmod +t "$f";lf -remote "send $id reload"
+map +w $chmod +w "$f";lf -remote "send $id reload"
+map +x $chmod +x "$f";lf -remote "send $id reload"
 
-map -X $chmod -X "$f"
-map -r $chmod -r "$f"
-map -s $chmod -s "$f"
-map -t $chmod -t "$f"
-map -w $chmod -w "$f"
-map -x $chmod -x "$f"
+map -X $chmod -X "$f";lf -remote "send $id reload"
+map -r $chmod -r "$f";lf -remote "send $id reload"
+map -s $chmod -s "$f";lf -remote "send $id reload"
+map -t $chmod -t "$f";lf -remote "send $id reload"
+map -w $chmod -w "$f";lf -remote "send $id reload"
+map -x $chmod -x "$f";lf -remote "send $id reload"
