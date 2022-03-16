@@ -41,7 +41,7 @@ cmd open ${{
     *.7z) 7z -p l "$f" | "$PAGER" ;;
     *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip) als -- "$f" | "$PAGER" ;;
     *.iso) iso-info -l -i -- "$f" | "$PAGER" ;;
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) [[ $(mediainfo $f|grep "Video"|wc -l) == 0 ]]&&mpv --audio-display=no -- "$f"||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 ;;
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) [[ $(mediainfo -- "$f"|grep "Video"|wc -l) == 0 ]]&&mpv --audio-display=no -- "$f"||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 ;;
     *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico) feh -- "$f" & ;;
     *.gif) sxiv -- "$f" & ;;
     *) case $(file --mime-type $f -b) in
@@ -53,7 +53,7 @@ cmd open ${{
   esac
 }}
 
-#paste, with option for don't overwrite or rename
+#paste, with option for don't overwrite and skip
 cmd pasteand &{{
   overwrite="$1"
   set -- $(cat ~/.local/share/lf/files)
@@ -61,7 +61,7 @@ cmd pasteand &{{
   shift
   case "$mode" in
     copy)
-      if [ $overwrite == 'insert' ]; then
+      if [ $overwrite == 'skip' ]; then
         rsync -av --ignore-existing --progress -- "$@" . |
         stdbuf -i0 -o0 -e0 tr '\r' '\n' |
         while IFS= read -r line; do
@@ -75,7 +75,7 @@ cmd pasteand &{{
         done
       fi
     ;;
-    move)[[ $overwrite == 'insert' ]]&&mv -n -- "$@" .||mv -f -- "$@" .;;
+    move)[[ $overwrite == 'skip' ]]&&mv -n -- "$@" .||mv -f -- "$@" .;;
   esac
   rm ~/.local/share/lf/files
   lf -remote "send clear"
@@ -167,7 +167,7 @@ map d
 map yy copy
 map yp ${{#Yank paths
   printf "%s" "$fx" | xclip -selection clipboard}}
-map yn ${{#Yank filename
+map yn ${{#Yank filenames
   basename -a -- $fx | head -c-1 | xclip -i -selection clipboard}}
 map dd cut
 #filespace
@@ -181,7 +181,7 @@ map df !{{#File system space usage
 # paste keybinds
 map p
 map pp paste
-map pi pasteand insert
+map pi pasteand skip
 map po pasteand overwrite
 map pl symlink relative
 map pL symlink absolute
