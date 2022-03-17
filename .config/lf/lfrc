@@ -44,7 +44,7 @@ cmd open ${{
     *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip) als -- "$f" | "$PAGER" ;;
     *.iso) iso-info -l -i -- "$f" | "$PAGER" ;;
     #video/audio -- new terminal if both video and audio files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) isaudio=0&&isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep "Video"|wc -l) == 0 ]]&&isaudio=1||isvideo=1;done&&[[ $isaudio == 1 ]]&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1 ;;
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep "Video"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1 ;;
     #images -- sends file list of current directory, or selection if multiple files
     *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga) [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- 1>/dev/null 2>/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- 1>/dev/null 2>/dev/null 2>&1 & ;;
     *.gif)[[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(gif)'|sort -fV|sxiv -a -- -||for i in $fx;do echo $i;done|sort -fV|sxiv -a -- - & ;;
