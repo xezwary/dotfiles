@@ -38,28 +38,49 @@ cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 cmd open ${{
   case "$f" in
     #torrents
-    *.torrent) transadd "$f" ;;
+    *.torrent)
+      transadd "$f"
+    ;;
     #archives
-    *.7z) 7z -p l "$f" | "$PAGER" ;;
-    *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip) als -- "$f" | "$PAGER" ;;
-    *.iso) iso-info -l -i -- "$f" | "$PAGER" ;;
+    *.7z)
+      7z -p l "$f" | "$PAGER"
+    ;;
+    *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip)
+      als -- "$f" | "$PAGER"
+    ;;
+    *.iso)
+      iso-info -l -i -- "$f" | "$PAGER"
+    ;;
 
     #video/audio -- force gui window if both video and audio files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi) isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep "Video"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1 ;;
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi)
+      isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep "Video"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1
+    ;;
  
     #images -- sends file list of current directory, or selection if multiple files
-    #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga) [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- 1>/dev/null 2>/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- 1>/dev/null 2>/dev/null 2>&1 & ;;
-    *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga|*.gif)[[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga|gif)'|sort -fV)&&for i in $imagelist;do echo $i;done|nsxiv -g 2560x1440 -s f -a -n $(echo "${imagelist[*]}"|grep --line-number --fixed-strings -- "./$(basename $f)"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|nsxiv -g 2560x1440 -s f -a -- - & ;;
+    #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga)
+    #  [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- 1>/dev/null 2>/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- 1>/dev/null 2>/dev/null 2>&1 & ;;
+    *.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga|*.gif)
+      [[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga|gif)'|sort -fV)&&for i in $imagelist;do echo $i;done|nsxiv -g 2560x1440 -s f -a -n $(echo "${imagelist[*]}"|grep --line-number --fixed-strings -- "./$(basename $f)"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|nsxiv -g 2560x1440 -s f -a -- - &
+    ;;
 
     *) case $(file --mime-type $f -b) in
       #text
-      text/*|application/json|inode/x-empty) $EDITOR -- "$f" ;;
+      text/*|application/json|inode/x-empty)
+        $EDITOR -- "$f" 
+      ;;
       #video
-      video/*) __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 & ;;
+      video/*)
+        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 &
+      ;;
       #audio
-      audio/*) mpv --audio-display=no -- "$f" ;;
+      audio/*)
+        mpv --audio-display=no -- "$f"
+      ;;
       #other
-      *) mimeopen --ask -- "$f" ;;
+      *)
+        mimeopen --ask -- "$f"
+      ;;
     esac
   esac
 }}
@@ -158,9 +179,11 @@ map <insert> push :touch<space>
 map c
 map A rename # at the very end
 #map cw push A<c-u> # new rename
+
 #smartbulkrename -- vimv if several items are selected
 map cw ${{#Smart bulk rename
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&vimv $(realpath --relative-to=$PWD -- $fx)||lf -remote "send $id push A<c-u>"}}
+
 map I push A<c-a> # at the very beginning
 map a push A<a-b><c-b> # before extention
 
