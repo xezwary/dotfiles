@@ -1,4 +1,5 @@
 # This config basically turns lf into Ranger with added features that I like.
+##My setup uses ueberzug, nerd-fonts-terminus, mediainfo, xclip, vimv, nsxiv, mpv, luke's transadd script, auntools, unar, 7z
 
 # basic vars
 set shellopts '-eu'
