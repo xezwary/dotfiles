@@ -55,7 +55,7 @@ cmd open ${{
 
     #video/audio -- force gui window if video files are present
     *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi)
-      isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep "Video"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1
+      isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep -E "^Video$"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1
     ;;
  
     #images -- sends file list of current directory, or selection if multiple files
