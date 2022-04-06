@@ -145,9 +145,11 @@ map @ push :%<space>"$f"<home><c-f>
 #file handling
 map e
 map E $$EDITOR -- "$f"
-map r $mimeopen --ask -- "$f"
 map t &{{#tag
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id tag-toggle"||lf -remote "send $id :tag-toggle; down"}}
+#map r $mimeopen --ask -- "$f"
+map r ${{#ask open
+  case "$f" in *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip|*.7z)clear;tput cup $(($(tput lines)/3));tput bold;set -f&&printf "1: unar\n2: aunpack\nInput: "&&read ans&&case $ans in 1)lf -remote "send $id extractunar";;2)lf -remote "send $id extractaunpack";;esac;;*)case $(file --mime-type $f -b) in image/*)clear;tput cup $(($(tput lines)/3));tput bold;set -f&&printf "1: nsxiv\n2: gimp\nInput: "&&read ans&&case $ans in 1)lf -remote "send $id open";;2)setsid -f gimp $f >/dev/null 2>&1;;esac;;*)mimeopen --ask -- "$f";;esac;;esac}}
 #set default for opening file
 map R $mimeopen -d -- "$f"
 #execute file
@@ -189,7 +191,7 @@ map A rename # at the very end
 
 #smartbulkrename -- vimv if several items are selected
 map cw ${{#Smart bulk rename
-  set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&vimv $(realpath --relative-to=$PWD -- $fx)||lf -remote "send $id push A<c-u>"}}
+  set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id bulkrename"||lf -remote "send $id push A<c-u>"}}
 
 map I push A<c-a> # at the very beginning
 map a push A<a-b><c-b> # before extention
