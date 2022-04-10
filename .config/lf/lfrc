@@ -230,7 +230,7 @@ map df !{{#File system space usage
 
 # paste keybinds
 map p
-map pp paste
+map pp :paste; clear
 map pi pasteand skip
 map po pasteand overwrite
 map pl symlink relative
