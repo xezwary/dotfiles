@@ -20,14 +20,14 @@ set cleaner '~/.config/lf/cleaner'
 # cmds/functions
 %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
 
-cmd mkdir $mkdir -p -- "$(echo $* | tr ' ' '\ ')"
-cmd touch $:>> "$(echo $* | tr ' ' '\ ')"
-cmd chmod $set -f&&chmod $* $fx&&lf -remote 'send reload'
+cmd mkdir &mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
+cmd touch &:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
+cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
-cmd trash $set -f&&gio trash -- $fx
-cmd empty $set -f&&gio trash --empty
+cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id reload"
+cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
 
-cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx)
+cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx);lf -remote "send $id reload"
 
 cmd open-with %"$@" $f
 
@@ -202,7 +202,7 @@ map A rename # at the very end
 #map cw push A<c-u> # new rename
 
 #smartbulkrename -- vimv if several items are selected
-map cw ${{#Smart bulk rename
+map cw &{{#Smart bulk rename
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id bulkrename"||lf -remote "send $id push A<c-u>"}}
 
 map I push A<c-a> # at the very beginning
@@ -213,8 +213,8 @@ map u
 map uv unselect
 map uy clear
 map ud clear
-map um %{{#Unmount
-  umount -l -- "$f"}}
+map um &{{#Unmount
+  [[ $(umount -l -- "$f") ]]&&lf -remote "send $id echo unmounted $f"||lf -remote "send $id echo not mounted."}}
 
 # yank/cut keybinds
 map y
@@ -262,16 +262,16 @@ map oe :set sortby ext; set noreverse; set info
 map or :set reverse!
 
 # chmod keybinds
-map +X $chmod +X "$f";lf -remote "send $id reload"
-map +r $chmod +r "$f";lf -remote "send $id reload"
-map +s $chmod +s "$f";lf -remote "send $id reload"
-map +t $chmod +t "$f";lf -remote "send $id reload"
-map +w $chmod +w "$f";lf -remote "send $id reload"
-map +x $chmod +x "$f";lf -remote "send $id reload"
+map +X &chmod +X "$f";lf -remote "send $id reload"
+map +r &chmod +r "$f";lf -remote "send $id reload"
+map +s &chmod +s "$f";lf -remote "send $id reload"
+map +t &chmod +t "$f";lf -remote "send $id reload"
+map +w &chmod +w "$f";lf -remote "send $id reload"
+map +x &chmod +x "$f";lf -remote "send $id reload"
 
-map -X $chmod -X "$f";lf -remote "send $id reload"
-map -r $chmod -r "$f";lf -remote "send $id reload"
-map -s $chmod -s "$f";lf -remote "send $id reload"
-map -t $chmod -t "$f";lf -remote "send $id reload"
-map -w $chmod -w "$f";lf -remote "send $id reload"
-map -x $chmod -x "$f";lf -remote "send $id reload"
+map -X &chmod -X "$f";lf -remote "send $id reload"
+map -r &chmod -r "$f";lf -remote "send $id reload"
+map -s &chmod -s "$f";lf -remote "send $id reload"
+map -t &chmod -t "$f";lf -remote "send $id reload"
+map -w &chmod -w "$f";lf -remote "send $id reload"
+map -x &chmod -x "$f";lf -remote "send $id reload"
