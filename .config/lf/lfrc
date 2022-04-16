@@ -1,5 +1,5 @@
 # This config basically turns lf into Ranger with added features that I like.
-##My setup uses ueberzug, nerd-fonts-terminus, mediainfo, xclip, vimv, nsxiv, mpv, luke's transadd script, atool, unar, 7z, mcomix, wine, protonge
+##My setup uses ueberzug, nerd-fonts-terminus, mediainfo, glow, xclip, vimv, nsxiv, mpv, luke's transadd script, atool, unar, 7z, mcomix, wine, protonge
 ###Use lfub in Programs directory to launch lf
 
 # basic vars
@@ -41,7 +41,7 @@ cmd open ${{
   case "$f" in
     #torrents
     *.torrent)
-      transadd "$f"
+      transadd "$f" &
     ;;
     #archives
     *.7z)
@@ -53,10 +53,13 @@ cmd open ${{
     *.iso)
       iso-info -l -i -- "$f" | "$PAGER"
     ;;
+    *.cbr|*.cbt|*.cbz|*.cb7)
+      setsid -f mcomix -- "$f"
+    ;;
 
     #video/audio -- force gui window if video files are present
     *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi)
-      isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep -E "^Video$"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null 1>/dev/null 2>&1
+      isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep -E "^Video$"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null >/dev/null 2>&1
     ;;
  
     #images -- sends file list of current directory, or selection if multiple files
@@ -81,7 +84,7 @@ cmd open ${{
       ;;
       #video
       video/*)
-        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" 2>/dev/null 1>/dev/null 2>&1 &
+        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" 2>/dev/null >/dev/null 2>&1
       ;;
       #audio
       audio/*)
@@ -127,13 +130,13 @@ cmd pasteand &{{
   lf -remote "send clear"
 }}
 
-cmd symlink %{{
+cmd symlink &{{
   linktype=$1
   set -- $(cat ~/.local/share/lf/files)
   mode="$1"
   shift
   if [ "$#" -lt 1 ]; then
-    echo "no files to link"
+    lf -remote "send $id echo no files to link"
     exit 0
   fi
   for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num"&&num=$((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
@@ -166,17 +169,17 @@ map x $$f
 map X !$f
 
 # tmux keybinds
-map ee $tmux split-window -v $EDITOR "$f"
-map eE $tmux split-window -h $EDITOR "$f"
-map es $tmux split-window -v -c "$PWD"
-map eS $tmux split-window -v -c "$PWD" ~/Programs/lfub 
-map ev $tmux split-window -h -c "$PWD"
-map eV $tmux split-window -h -c "$PWD" ~/Programs/lfub
-map ew $tmux new-window -c "$PWD"
-map eW $tmux new-window -c "$PWD" ~/Programs/lfub
+map ee &tmux split-window -v $EDITOR "$f"
+map eE &tmux split-window -h $EDITOR "$f"
+map es &tmux split-window -v -c "$PWD"
+map eS &tmux split-window -v -c "$PWD" ~/Programs/lfub 
+map ev &tmux split-window -h -c "$PWD"
+map eV &tmux split-window -h -c "$PWD" ~/Programs/lfub
+map ew &tmux new-window -c "$PWD"
+map eW &tmux new-window -c "$PWD" ~/Programs/lfub
 
 # navigation keybinds
-map gi $lf -remote "send $id cd /run/media/$USER"
+map gi &lf -remote "send $id cd /run/media/$USER"
 map gm cd /media
 map gr cd /
 map gd cd /dev
@@ -217,11 +220,11 @@ map um %{{#Unmount
 map y
 map d
 map yy copy
-map yp ${{#Yank paths
+map yp &{{#Yank paths
   printf "%s" "$fx" | xclip -selection clipboard}}
-map yn ${{#Yank filenames
+map yn &{{#Yank filenames
   basename -a -- $fx | head -c-1 | xclip -i -selection clipboard}}
-map yp ${{#Yank directory
+map yp &{{#Yank directory
   printf "%s" "$PWD" | xclip -selection clipboard}}
 map dd cut
 # filespace keybinds
