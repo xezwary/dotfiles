@@ -243,6 +243,10 @@ Vagrantfile             
 *.swm                   
 *.dwm                   
 *.esd                   
+*.cbz                   
+*.cbt                   
+*.cb7                   
+*.cbr                   
 *.iso                   
 *.jpg                   
 *.jpeg                  

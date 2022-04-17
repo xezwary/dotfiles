@@ -23,6 +23,7 @@ README.*     33
 *.ogg        35
 *.m4a        35
 *.m4v        35
+*.aac        35
 *.md         97
 ln           01;36
 di           1;94
