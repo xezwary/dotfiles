@@ -26,6 +26,7 @@ cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
 cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id reload"
 cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
+cmd restore $set -f&&clear&&gio trash --list|grep -- "$(basename -a -- $fx)"&&echo -n "Restore? [y/n]"&&read ans&&[[ "$ans" == "y" ]]&&for i in $fx;do gio trash --restore "$(gio trash --list|grep -- "$(basename -a -- $i)"|awk '{print $1; }')";done&&lf -remote "send $id reload"||exit 0
 
 cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx);lf -remote "send $id reload"
 
