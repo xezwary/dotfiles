@@ -140,9 +140,9 @@ cmd symlink &{{
     lf -remote "send $id echo no files to link"
     exit 0
   fi
-  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num"&&num=$((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
+  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&num=$((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
   rm ~/.local/share/lf/files
-  lf -remote "send clear"
+  lf -remote "send :clear; reload"
 }}
 
 # bindings
