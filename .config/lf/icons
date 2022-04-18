@@ -258,6 +258,7 @@ Vagrantfile             
 *.avi                   
 *.JPG                   
 *.JPEG                  
+*.PNG                   
 *.bmp                   
 *.png                   
 *.webp                  
