@@ -45,7 +45,7 @@ cmd open ${{
   case "$f" in
     #torrents
     *.torrent)
-      transadd "$f" &
+      transadd "$f";clear &
     ;;
     #archives
     *.7z)
