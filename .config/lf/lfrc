@@ -218,7 +218,7 @@ map uv unselect
 map uy clear
 map ud clear
 map um &{{#Unmount
-  umount -l -- "$f"&&lf -remote "send $id echo unmounted $f"||lf -remote "send $id echo not mounted.";lf -remote "send $id reload"}}
+  umount -l -- "$f"&&lf -remote "send $id :reload;echo unmounted $f"||lf -remote "send $id echo not mounted."}}
 
 # yank/cut keybinds
 map y

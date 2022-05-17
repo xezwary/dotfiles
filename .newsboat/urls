@@ -10,15 +10,17 @@ https://puri.sm/feed/ Linux
 https://9to5linux.com/feed Linux
 https://forum.manjaro.org/c/announcements/stable-updates/12.rss Linux
 https://www.archlinux.org/feeds/news/ Linux
+https://mastodon.social/@Tutanota.rss Mastodon
 https://github.com/gokcehan/lf/releases.atom Linux
-https://linuxgamecast.com/feed/lgcweeklyaudio/ Linux Podcast
+https://github.com/cirala/lfimg/commits/master.atom Linux
+https://github.com/nsxiv/nsxiv/commits/master.atom Linux
+https://linuxgamecast.com/feed/lgcweeklyaudio/ Linux Games Podcast
 https://linuxgamecast.com/feed/lwdwaudio/ Linux Podcast
 https://www.distortedview.com/show/feed/podcast/ Podcast
 https://rss.whooshkaa.com/rss/podcast/id/13411 Podcast
-https://www.omnycontent.com/d/playlist/2fb3740d-3436-44af-8cc0-a91900716aa5/5bc8c2ed-b718-4f44-beb3-ac2a005246cc/786928c3-10c1-4cef-a7bf-ac2a005246d0/podcast.rss Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UCrVRavp-eMeiWAuGcMJ1h0g "YouTube Subscriptions" Podcast
 https://lukesmith.xyz/rss.xml Linux
-https://notrelated.xyz/rss Linux
+https://notrelated.xyz/rss Podcast
 https://www.youtube.com/feeds/videos.xml?playlist_id=PLhr4ecKqOIhvq39JGWIerJJTDaHCpIx7X "~PGG Podcast" Podcast
 https://realparanormalactivity.com/rss Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3V55HDHFjtWY2fdP3pneAA "YouTube Subscriptions" Podcast
@@ -32,7 +34,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCQEnQfezywrAwkHWX_Uo_Qg "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCGfWSU7Pqu4-WMqJorOSrsQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCJ6KZTTnkE-s2XFJJmoTAkw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCE1jXbVAGJQEORz9nZqb5bQ "YouTube Subscriptions"
-https://odysee.com/$/rss/@Avahe/ac3dac9df921ebb37c109abf70e4b9f2590667ec "~Avahe" "Odysee Subscriptions"
+https://odysee.com/$/rss/@Avahe/ac3dac9df921ebb37c109abf70e4b9f2590667ec "~Avahe on Odysee" "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCrjImfv2PReA1VhEfNaDOYw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCxt9Pvye-9x_AIcb1UtmF1Q "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCOlYCvPb_p1k-iMr7QRZATQ "YouTube Subscriptions"
@@ -59,7 +61,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg "Yo
 https://odysee.com/$/rss/@DistroTube/2332c0df0bd5e046db04fe7e3e79f756d35a1523 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCZOnoLKzoBItcEk5OsES2TA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC4BZtFgtCuHUt0p8J-XENiA "YouTube Subscriptions"
-https://www.bitchute.com/feeds/rss/channel/erofthesemicolon/ "YouTube Subscriptions"
+https://odysee.com/$/rss/@EsemicolonR:f "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCzSHr-wO24dtLB0-KkiY3MQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCOZfpWD7SM5t1Mmk0_aJdfw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCbWcXB0PoqOsAvAdfzWMf0w "YouTube Subscriptions"
@@ -100,6 +102,7 @@ https://odysee.com/$/rss/@linuxgamecast/0c9b5678e5f5d00ae4ca043fb8f36275e5988774
 https://odysee.com/$/rss/@Luke/70d0495ea46072bead82429fb405d60438036524 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCgxiGG-_riejUKerXZNKLpw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UClOGLGPOqlAiLmOvXW5lKbw "YouTube Subscriptions"
+https://odysee.com/$/rss/@AlphaNerd:8 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCL_qhgtOy0dy1Agp8vkySQg "YouTube Subscriptions" HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7ELKFxvLAWktmUsaFR004g "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3n5uGu18FoCy23ggWWp8tA "YouTube Subscriptions" HoloLiveEN
@@ -151,7 +154,7 @@ https://odysee.com/$/rss/@ThatStarWarsGirl:c "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCzkycrIy_WKwdGoLNfz510w "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCnNlJNSRxa3PF8XrKHOEPug "YouTube Subscriptions"
 https://odysee.com/$/rss/@TheQuartering/113515e893b8186595595e594ecc410bae50c026 "Odysee Subscriptions"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCilouT5irlCNn2imcCDhhJQ "YouTube Subscriptions"
+https://mastodon.online/@TheQuartering.rss "~TheQuartering (@TheQuartering@mastodon.social)" Mastodon
 https://www.youtube.com/feeds/videos.xml?channel_id=UCRlICXvO4XR4HMeEB9JjDlA "YouTube Subscriptions"
 https://odysee.com/$/rss/@Thoughty2/b6e207c5f8c58e7c8362cd05a1501bf2f5b694f2 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCaLIHcc4xFLV47zlHbAIe7Q "YouTube Subscriptions"

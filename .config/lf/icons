@@ -314,6 +314,7 @@ Vagrantfile             
 *.mp3                   
 *.mpc                   
 *.ogg                   
+*.OGG                   
 *.ra                    
 *.wav                   
 *.oga                   

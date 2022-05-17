@@ -23,6 +23,7 @@ README.*     33
 *.flac       35
 *.wav        35
 *.ogg        35
+*.OGG        35
 *.m4a        35
 *.m4v        35
 *.aac        35
