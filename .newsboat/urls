@@ -1,6 +1,7 @@
 "query:Starred Articles:flags # \"s\""
 https://feeds.feedburner.com/crunchyroll/rss/anime Anime
-https://www.wakanim.tv/sc/v2/home/rss Anime
+https://www.wakanim.tv/sc/v2/home/rss "~Wakanim.tv" Anime
+filter:~/.newsboat/dekudeals.sh: Games
 https://github.com/furiousg4m3r/Tales-of-Destiny-DC/releases.atom Games
 https://blog.scssoft.com/feeds/posts/default?alt=rss Games
 https://linuxgameconsortium.com/feed/ Linux Games
