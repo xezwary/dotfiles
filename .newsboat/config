@@ -1,7 +1,7 @@
 auto-reload yes
 suppress-first-reload yes
 reload-time 30
-reload-threads 4
+reload-threads 6
 download-retries 4
 download-timeout 10
 download-path "~/Downloads/newsboat"
@@ -21,6 +21,7 @@ bookmark-autopilot yes
 feed-sort-order none
 browser ~/scripts/bash/commands/xclipit.sh
 player mpv
+define-filter "All feeds with 's' flag" "flags # \"s\""
 
 bind-key j down
 bind-key k up
@@ -42,12 +43,14 @@ bind-key a toggle-article-read
 bind-key b open-in-browser
 bind-key o sort
 bind-key O rev-sort
-bind-key m bookmark
+bind-key M bookmark
 bind-key f goto-title
 bind-key e edit-flags
 bind-key F select-filter
 bind-key X clear-filter
+bind-key s macro-prefix
 
+macro s edit-flags s
 macro f set browser "firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro d set browser "~/Programs/firefox/firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro b set browser "brave %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
@@ -58,8 +61,6 @@ macro n set browser "~/scripts/bash/commands/mpv_youtubedl_quality2.sh %u"; open
 macro t set browser "alacritty -e ~/scripts/bash/commands/mpv_youtubedl_quality3.sh 2160 %u &"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro p set browser "~/.newsboat/playlist.sh %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro x set browser "~/scripts/bash/commands/xclipit.sh %u"; open-in-browser
-
-define-filter "All feeds with 's' flag" "flags # \"s\""
 
 color listnormal color15 default
 color listfocus color0 color15 standout bold
