@@ -44,7 +44,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 		;;
 	*.wav|*.mp3|*.flac|*.m4a|*.wma|*.ape|*.ac3|*.og[agx]|*.spx|*.opus|*.as[fx]|*.mka)
 		[ ! -f "${CACHE}.jpg" ] && \
-      ffmpeg -i "$1" -f lavfi -i color=c=black:s=640x320 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=640x320:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "$CACHE.jpg"
+      ffmpeg -i "$1" -f lavfi -i color=c=black:s=640x320 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=640x320:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "$CACHE.jpg"&&convert "${CACHE}.jpg" -trim "${CACHE}.jpg"
 		chafa "${CACHE}.jpg" -s "$4x"
     exiftool "$1"
 		;;
