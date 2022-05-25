@@ -107,19 +107,18 @@ cmd open ${{
 }}
 
 cmd openrifle ${{
-  clear&&cnum="first"&&for ((loopnum=1;loopnum<=2;loopnum++))
-  do iternum=0&&for ((i=1;i<=10;i++))
-    do [[ $i == 1 ]]&&[[ $(echo $f|grep -E "*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - evince"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
-    [[ $i == 2 ]]&&[[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractunar"&&exit 0||\
-    [[ $i == 3 ]]&&[[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractaunpack"&&exit 0||\
-    [[ $i == 4 ]]&&[[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&clear&&setsid -f mcomix -- "$f"&&exit 0||\
-    [[ $i == 5 ]]&&[[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f wine "$f" >/dev/null 2>&1&&exit 0||\
-    [[ $i == 6 ]]&&[[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1&&exit 0||\
-    [[ $i == 7 ]]&&[[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
-    [[ $i == 8 ]]&&[[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - gimp"&&[[ $cnum == $iternum ]]&&clear&&setsid -f gimp -- $f >/dev/null 2>&1&&exit 0||\
-    [[ $i == 9 ]]&&[[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - mpv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
-    [[ $i == 10 ]]&&[[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&clear&&setsid -f tenacity -- $f >/dev/null 2>&1&&exit 0
-  done
+  clear&&cnum="first"&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0
+  [[ $(echo $f|grep -E "*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - evince"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
+  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractunar"&&exit 0||\
+  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractaunpack"&&exit 0||\
+  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&clear&&setsid -f mcomix -- "$f"&&exit 0||\
+  [[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f wine "$f" >/dev/null 2>&1&&exit 0||\
+  [[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1&&exit 0||\
+  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
+  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - gimp"&&[[ $cnum == $iternum ]]&&clear&&setsid -f gimp -- $f >/dev/null 2>&1&&exit 0||\
+  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - mpv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0||\
+  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&clear&&setsid -f tenacity -- $f >/dev/null 2>&1&&exit 0
+
   [[ $iternum == 0 ]]&&exit 0||[[ $loopnum == 2 ]]&&[[ $cnum != "first" ]]&&exit 0||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 ]];do echo -en "\rOpen with: "&&read cnum;done
 done
 }}
