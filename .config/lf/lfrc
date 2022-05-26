@@ -51,27 +51,27 @@ cmd open ${{
     *.7z)
       7z -p l "$f" | "$PAGER"
     ;;
-    *.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.rar|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz|*.zip)
+    *.ace$|*.ar$|*.arc$|*.tbz$|*.tbz2$|*.bz2$|*.cab$|*.cpio$|*.cpt$|*.deb$|*.dgc$|*.dmg$|*.gz$|*.jar$|*.msi$|*.pkg$|*.rar$|*.shar$|*.tar$|*.tgz$|*.xar$|*.xpi$|*.xz$|*.zip)
       als -- "$f" | "$PAGER"
     ;;
     *.iso)
       iso-info -l -i -- "$f" | "$PAGER"
     ;;
-    *.cbr|*.cbt|*.cbz|*.cb7)
+    *.cbr$|*.cbt$|*.cbz$|*.cb7)
       setsid -f mcomix -- "$f"
     ;;
 
     #video/audio -- force gui window if video files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi)
+    *.mp4$|*.webm$|*.mkv$|*.mp3$|*.flac$|*.m4a$|*.m4v$|*.aac$|*.ogg$|*.wav$|*.wmv$|*.avi)
       isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep -E "^Video$"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null >/dev/null 2>&1
     ;;
  
     #images -- sends file list of current directory, or selection if multiple files
     ##feh
-    #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga)
+    #*.jpg$|*.png$|*.jpeg$|*.JPG$|*.JPEG$|*.PNG$|*.webp$|*.ico$|*.tga)
     #  [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- 1>/dev/null 2>/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- 1>/dev/null 2>/dev/null 2>&1 & ;;
     ##nsxiv
-    #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga|*.gif)
+    #*.jpg$|*.png$|*.jpeg$|*.JPG$|*.JPEG$|*.PNG$|*.webp$|*.ico$|*.tga$|*.gif)
     #  [[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga|gif)'|sort -fV)&&for i in $imagelist;do echo $i;done|nsxiv -g 2560x1440 -s f -a -n $(echo "${imagelist[*]}"|grep --line-number --fixed-strings -- "./$(basename $f)"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|nsxiv -g 2560x1440 -s f -a -- - &
     #;;
 
@@ -107,30 +107,37 @@ cmd open ${{
 }}
 
 cmd openrifle ${{
-  clear&&cnum="first"&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&exit 0
-#evince
-  [[ $(echo $f|grep -E "*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - evince"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0
+  clear&&cnum="first"&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
+##Archives
 #unar
-  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractunar"&&exit 0
+  [[ $(echo $f|grep -E "*\.cbr$|*\.cbt$|*\.cbz$|*\.cb7$|*\.rar$|*\.zip$|*\.7z$|*\.ace$|*\.ar$|*\.arc$|*\.tbz$|*\.tbz2$|*\.bz2$|*\.cab$|*\.cpio$|*\.cpt$|*\.deb$|*\.dgc$|*\.dmg$|*\.gz$|*\.jar$|*\.msi$|*\.pkg$|*\.shar$|*\.tar$|*\.tgz$|*\.xar$|*\.xpi$|*\.xz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
 #aunpack
-  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.ace|*.ar|*.arc|*.tbz|*.tbz2|*.bz2|*.cab|*.cpio|*.cpt|*.deb|*.dgc|*.dmg|*.gz|*.jar|*.msi|*.pkg|*.shar|*.tar|*.tgz|*.xar|*.xpi|*.xz"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id extractaunpack"&&exit 0
+  [[ $(echo $f|grep -E "\*.cbr$|*\.cbt$|*\.cbz$|*\.cb7$|*\.rar$|*\.zip$|*\.7z$|*\.ace$|*\.ar$|*\.arc$|*\.tbz$|*\.tbz2$|*\.bz2$|*\.cab$|*\.cpio$|*\.cpt$|*\.deb$|*\.dgc$|*\.dmg$|*\.gz$|*\.jar$|*\.msi$|*\.pkg$|*\.shar$|*\.tar$|*\.tgz$|*\.xar$|*\.xpi$|*\.xz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractaunpack"
+##Documents
+#Evince
+  [[ $(echo $f|grep -E "*\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #MComix
-  [[ $(echo $f|grep -E "*.cbr|*.cbt|*.cbz|*.cb7|*.rar|*.zip|*.7z|*.pdf"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&clear&&setsid -f mcomix -- "$f"&&exit 0
-#wine
-  [[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f wine "$f" >/dev/null 2>&1&&exit 0
+  [[ $(echo $f|grep -E "*\.cbr$|*\.cbt$|*\.cbz$|*\.cb7$|*\.rar$|*\.zip$|*\.7z$|*\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&setsid -f mcomix -- "$f"
+#unar
+  [[ $(echo $f|grep -E "*\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
+##Executables
+#Wine
+  [[ $(echo $f|grep -E "*\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f wine "$f" >/dev/null 2>&1
 #Proton
-  [[ $(echo $f|grep -E "*.exe"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&clear&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1&&exit 0
+  [[ $(echo $f|grep -E "*\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1
+##Images
 #nsxiv
-  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0
+  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #GIMP
-  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - gimp"&&[[ $cnum == $iternum ]]&&clear&&setsid -f gimp -- $f >/dev/null 2>&1&&exit 0
+  [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1
+#Audio
 #MPV
-  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - mpv"&&[[ $cnum == $iternum ]]&&clear&&lf -remote "send $id open"&&exit 0
+  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #Tenacity
-  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&clear&&setsid -f tenacity -- $f >/dev/null 2>&1&&exit 0
+  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
 
   [[ $iternum == 0 ]]&&exit 0||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 ]]||[[ $cnum == "" ]];do echo -n "Open with: "&&read cnum;done
-done
+done;clear
 }}
 
 #paste, with option for overwrite or skip, copy shows progress
