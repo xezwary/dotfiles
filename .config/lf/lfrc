@@ -130,9 +130,11 @@ cmd openrifle ${{
   [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #GIMP
   [[ $(file --mime-type $f -b|grep -E "image/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1
-#Audio
+##Video/audio
 #MPV
-  [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
+  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.mp3$|*\.flac$|*\.m4a$|*\.m4v$|*\.aac$|*\.ogg$|*\.wav$|*\.wmv$|*\.avi$"|wc -l) > 0 ]]||[[ $(file --mime-type $f -b|grep -E "video/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
+#VLC
+  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.m4v$|*\.wmv$|*\.avi$"|wc -l) > 0 ]]||[[ $(file --mime-type $f -b|grep -E "video/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1
 #Tenacity
   [[ $(file --mime-type $f -b|grep -E "audio/*"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
 
