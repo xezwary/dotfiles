@@ -14,7 +14,7 @@ scrolloff 10
 confirm-mark-feed-read no
 confirm-exit yes
 
-bookmark-cmd "/home/haakon/.newsboat/bookmark.sh"
+bookmark-cmd "~/.newsboat/bookmark.sh"
 bookmark-interactive no
 bookmark-autopilot yes
 
