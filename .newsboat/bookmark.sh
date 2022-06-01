@@ -10,7 +10,7 @@ url=$(echo "${url}" | perl -p -e 's/(\?|\&)?utm_[a-z]+=[^\&]+//g;' -e 's/(#|\&)?
 title="$2"
 description="$3"
 
-grep -q "* ${url}" ~/vimwiki/bookmarks.wiki || echo -e "= ${title} =\n  -$4\n  * ${url}" >> ~/vimwiki/bookmarks.wiki
+grep -q "* ${url}" ~/vimwiki/bookmarks.wiki || echo -e "*${title}*\n  - $4\n  * ${url}" >> ~/vimwiki/bookmarks.wiki
 
 #xmlstarlet ed -L   -a "//channel/description" -t elem -n item -v ""  \
 #     -s "//item[1]" -t elem -n title -v "${title}" \
