@@ -1,0 +1,2 @@
+#!/bin/bash
+[[ $1 ]]&&NUM_PROCS=$(cat /proc/cpuinfo | awk '/^processor/{print $3}'| wc -l)&&for i in /tmp/mpvSockets/*;do echo "echo \"seek $1\"|socat - \"$i\"";done|xargs -d '\n' -P $NUM_PROCS -I {} /bin/bash -c "{}"

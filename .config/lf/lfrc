@@ -45,7 +45,7 @@ cmd open ${{
   case "$f" in
     #torrents
     *.torrent)
-      transadd "$f";clear &
+      transmission-show "$1" | "$PAGER"
     ;;
     #archives
     *.7z)
@@ -79,6 +79,9 @@ cmd open ${{
     *.pdf)
       setsid -f evince -- "$f"
     ;;
+    *.md)
+      glow -s dark -- "$f" | "$PAGER"
+    ;;
 
     # mimetype
     *) case $(file --mime-type -Lb -- "$f") in
@@ -108,6 +111,9 @@ cmd open ${{
 
 cmd openrifle ${{
   clear&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f" )&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
+##Torrents
+  [[ $(echo $f|grep -E "*\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&transadd "$f";clear &
+  [[ $(echo $f|grep -E "*\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&setsid -f qbittorrent "$f"
 ##Archives
 #unar
   [[ $(echo $f|grep -E "*\.cbr$|*\.cbt$|*\.cbz$|*\.cb7$|*\.rar$|*\.zip$|*\.7z$|*\.ace$|*\.ar$|*\.arc$|*\.tbz$|*\.tbz2$|*\.bz2$|*\.cab$|*\.cpio$|*\.cpt$|*\.deb$|*\.dgc$|*\.dmg$|*\.gz$|*\.jar$|*\.msi$|*\.pkg$|*\.shar$|*\.tar$|*\.tgz$|*\.xar$|*\.xpi$|*\.xz$|*\.iso$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
