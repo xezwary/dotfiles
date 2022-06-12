@@ -53,6 +53,18 @@ endif
 
 " custom stuff
 
+colorscheme slate
+syntax on
+if &t_Co == "256"
+  hi Normal guibg=NONE ctermbg=NONE
+  hi LineNr ctermfg=248 ctermbg=NONE cterm=NONE
+  hi Comment ctermfg=248 ctermbg=NONE cterm=NONE
+  hi Conceal ctermfg=248 ctermbg=NONE cterm=NONE
+  hi StatusLineNC ctermfg=240 ctermbg=144 cterm=NONE
+  hi StatusLineTermNC ctermfg=240 ctermbg=144 cterm=NONE
+  hi VertSplit ctermfg=240 ctermbg=144 cterm=NONE
+endif
+
 set nobackup number relativenumber tabstop=2 shiftwidth=2 expandtab splitbelow splitright
 augroup numbertoggle
   autocmd!
@@ -61,9 +73,6 @@ augroup numbertoggle
 augroup END
 set nocompatible
 filetype plugin on
-colorscheme slate
-syntax on
-highlight Normal guibg=NONE ctermbg=NONE
 set undofile
 set undodir=/home/haakon/.cache/vim/undo
 set mouse=
