@@ -61,8 +61,9 @@ augroup numbertoggle
 augroup END
 set nocompatible
 filetype plugin on
+colorscheme slate
 syntax on
-colo delek
+highlight Normal guibg=NONE ctermbg=NONE
 set undofile
 set undodir=/home/haakon/.cache/vim/undo
 set mouse=
