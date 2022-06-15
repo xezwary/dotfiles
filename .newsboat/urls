@@ -14,7 +14,7 @@ https://www.archlinux.org/feeds/news/ Linux
 https://mastodon.social/@Tutanota.rss Mastodon
 https://github.com/gokcehan/lf/releases.atom Linux
 https://github.com/cirala/lfimg/commits/master.atom Linux
-https://github.com/nsxiv/nsxiv/commits/master.atom Linux
+filter:~/.newsboat/nsxivcodeberg.sh: Linux
 https://linuxgamecast.com/feed/lgcweeklyaudio/ Linux Games Podcast
 https://linuxgamecast.com/feed/lwdwaudio/ Linux Podcast
 https://www.distortedview.com/show/feed/podcast/ Podcast

@@ -11,3 +11,4 @@ https://github.com/BrodieRobertson/dotfiles
 https://github.com/LukeSmithxyz/voidrice  
 https://github.com/artur-shaik/vimmer-dotfiles/blob/master/elinks/.elinks/elinks.conf  
 https://github.com/cirala/lfimg  
+https://github.com/wis/mpvSockets  
