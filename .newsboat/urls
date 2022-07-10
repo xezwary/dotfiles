@@ -2,6 +2,7 @@
 https://feeds.feedburner.com/crunchyroll/rss/anime Anime
 https://www.wakanim.tv/sc/v2/home/rss "~Wakanim.tv" Anime
 filter:~/.newsboat/dekudeals.sh: Games
+https://openmw.org/en/feed/ Games
 https://github.com/furiousg4m3r/Tales-of-Destiny-DC/releases.atom Games
 https://blog.scssoft.com/feeds/posts/default?alt=rss Games
 https://linuxgameconsortium.com/feed/ Linux Games
@@ -11,7 +12,7 @@ https://puri.sm/feed/ Linux
 https://9to5linux.com/feed Linux
 https://forum.manjaro.org/c/announcements/stable-updates/12.rss Linux
 https://www.archlinux.org/feeds/news/ Linux
-https://mastodon.social/@Tutanota.rss Mastodon
+https://github.com/GloriousEggroll/proton-ge-custom/releases.atom Linux
 https://github.com/gokcehan/lf/releases.atom Linux
 https://github.com/cirala/lfimg/commits/master.atom Linux
 filter:~/.newsboat/nsxivcodeberg.sh: Linux
