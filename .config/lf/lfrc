@@ -27,7 +27,7 @@ cmd mkdir &mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd touch &:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
-cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id reload"
+cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id down";lf -remote "send $id reload"
 cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
 cmd restore $set -f&&clear&&gio trash --list|grep -- "$(basename -a -- $fx)"&&echo -n "Restore? [y/n]"&&read ans&&[[ "$ans" == "y" ]]&&for i in $fx;do gio trash --restore "$(gio trash --list|grep -- "$(basename -a -- $i)"|awk '{print $1; }')";done&&lf -remote "send $id reload"||exit 0
 
@@ -62,7 +62,7 @@ cmd open ${{
     ;;
 
     #video/audio -- force gui window if video files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi)
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts)
       isvideo=0&&for i in $fx;do [[ $(mediainfo -- $i|grep -E "^Video$"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null >/dev/null 2>&1
     ;;
  
@@ -138,9 +138,9 @@ cmd openrifle ${{
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1
 ##Video/audio
 #MPV
-  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.mp3$|*\.flac$|*\.m4a$|*\.m4v$|*\.aac$|*\.ogg$|*\.wav$|*\.wmv$|*\.avi$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
+  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.mp3$|*\.flac$|*\.m4a$|*\.m4v$|*\.aac$|*\.ogg$|*\.wav$|*\.wmv$|*\.avi$|*\.ts$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #VLC
-  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.m4v$|*\.wmv$|*\.avi$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1
+  [[ $(echo $f|grep -E "*\.mp4$|*\.webm$|*\.mkv$|*\.m4v$|*\.wmv$|*\.avi$|*\.ts$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
 

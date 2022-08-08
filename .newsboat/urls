@@ -3,6 +3,7 @@ https://feeds.feedburner.com/crunchyroll/rss/anime Anime
 https://www.wakanim.tv/sc/v2/home/rss "~Wakanim.tv" Anime
 filter:~/.newsboat/dekudeals.sh: Games
 https://openmw.org/en/feed/ Games
+https://github.com/MathiewMay/tux-mod-manager/releases.atom Games
 https://github.com/furiousg4m3r/Tales-of-Destiny-DC/releases.atom Games
 https://blog.scssoft.com/feeds/posts/default?alt=rss Games
 https://linuxgameconsortium.com/feed/ Linux Games
@@ -20,13 +21,11 @@ https://linuxgamecast.com/feed/lgcweeklyaudio/ Linux Games Podcast
 https://linuxgamecast.com/feed/lwdwaudio/ Linux Podcast
 https://www.distortedview.com/show/feed/podcast/ Podcast
 https://rss.whooshkaa.com/rss/podcast/id/13411 Podcast
-https://www.youtube.com/feeds/videos.xml?channel_id=UCrVRavp-eMeiWAuGcMJ1h0g "YouTube Subscriptions" Podcast
 https://lukesmith.xyz/rss.xml Linux
 https://notrelated.xyz/rss Podcast
 https://www.youtube.com/feeds/videos.xml?playlist_id=PLhr4ecKqOIhvq39JGWIerJJTDaHCpIx7X "~PGG Podcast" Podcast
 https://realparanormalactivity.com/rss Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3V55HDHFjtWY2fdP3pneAA "YouTube Subscriptions" Podcast
-https://www.youtube.com/feeds/videos.xml?channel_id=UC3K33ddRqHhTORtl_Fc29tQ "YouTube Subscriptions" Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UCBq5p-xOla8xhnrbhu8AIAg "YouTube Subscriptions" Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UCbgr0d6b_-CTfvj4gZ4Vm3Q "YouTube Subscriptions" Podcast
 https://www.youtube.com/feeds/videos.xml?channel_id=UCQEnQfezywrAwkHWX_Uo_Qg "YouTube Subscriptions"
@@ -98,7 +97,6 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCdJdEguB1F1CiYe7OEi3SBg "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UC6lUqvh42Oc3XL19Edgd9QA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC64tqaIUdbAcOajtGHnV-qw "YouTube Subscriptions"
 https://odysee.com/$/rss/@lbry/3fda836a92faaceedfe398225fb9b2ee2ed1f01a "Odysee Subscriptions"
-https://www.youtube.com/feeds/videos.xml?channel_id=UCL5ZjPWL3o19MC6rxEATk6w "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCLx053rWZxCiYWsBETgdKrQ "YouTube Subscriptions"
 https://odysee.com/$/rss/@linuxgamecast/0c9b5678e5f5d00ae4ca043fb8f36275e5988774 "Odysee Subscriptions"
 https://odysee.com/$/rss/@Luke/70d0495ea46072bead82429fb405d60438036524 "Odysee Subscriptions"
@@ -145,6 +143,8 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCLhUvJ_wO9hOvv_yYENu4fQ "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCD6VugMZKRhSyzWEWA9W2fg "YouTube Subscriptions"
 https://www.bitchute.com/feeds/rss/channel/ssethtzeentach/ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCyfZeYmP1HqRSMEqgrsWTXg "YouTube Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCGeIjGngCkErevSNHdZYD5Q "YouTube Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCbvjXcT9ojfSrA8QrOKeY_w "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCw1rFohB1db6Xt85jDamY9A "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCHsx4Hqa-1ORjQTh9TYDhww "YouTube Subscriptions" HoloLiveEN 
 https://www.youtube.com/feeds/videos.xml?channel_id=UC26Cwg9HjAR2mGiUQAInQxg "YouTube Subscriptions"
@@ -163,6 +163,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCaLIHcc4xFLV47zlHbAIe7Q "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCsUj0dszADCGbF3gNrQEuSQ "YouTube Subscriptions" HoloLiveEN
 https://odysee.com/$/rss/@tuxfoo/edf63b41a82a93bad1d53b159af2e7e1fe119a5e "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCqrrxZeeFSNCjGmD-33SKMw "YouTube Subscriptions"
+https://odysee.com/$/rss/@umami:7 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-XXmB9IHCUdteHjgmmsaeg "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCTZPfdnseGUvPRK5gPxLbKQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg "YouTube Subscriptions" HoloLiveEN
