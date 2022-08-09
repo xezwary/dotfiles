@@ -29,7 +29,7 @@ cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
 cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id down";lf -remote "send $id reload"
 cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
-cmd restore $set -f&&clear&&gio trash --list|grep -- "$(basename -a -- $fx)"&&echo -n "Restore? [y/n]"&&read ans&&[[ "$ans" == "y" ]]&&for i in $fx;do gio trash --restore "$(gio trash --list|grep -- "$(basename -a -- $i)"|awk '{print $1; }')";done&&lf -remote "send $id reload"||exit 0
+cmd restore !set -f&&clear&&gio trash --list|grep -F -- "$(basename -a -- $fx)"&&echo -n "Restore? [y/n]"&&read ans&&[[ "$ans" == "y" ]]&&for i in $fx;do gio trash --restore "$(gio trash --list|grep -F -- "$(basename -a -- $i)"|awk '{print $1; }')";done&&lf -remote "send $id reload"||exit 0
 
 cmd bulkrename $set -f&&vimv $(realpath --relative-to=$PWD -- $fx);lf -remote "send $id reload"
 
@@ -99,7 +99,7 @@ cmd open ${{
       ;;
       #images
       image/*)
-        [[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find -L . -maxdepth 1 -type f|sort -fV)&&for i in $imagelist;do echo $i;done|setsid -f nsxiv -g 2560x1440 -s f -a -n $(echo "${imagelist[*]}"|grep --line-number -- "./$(basename $f)$"|cut -f1 -d:) -- - 2>/dev/null >/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|setsid -f nsxiv -g 2560x1440 -s f -a -- - 2>/dev/null >/dev/null 2>&1
+        [[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find -L . -maxdepth 1 -type f|sort -fV)&&for i in $imagelist;do echo $i;done|setsid -f nsxiv -g 2560x1440 -s f -a -n $(echo "${imagelist[*]}"|grep -n -F -- "./$(basename $f)"|cut -f1 -d:) -- - 2>/dev/null >/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|setsid -f nsxiv -g 2560x1440 -s f -a -- - 2>/dev/null >/dev/null 2>&1
       ;;
       #other
       *)
