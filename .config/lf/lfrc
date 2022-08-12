@@ -222,6 +222,13 @@ map ev &tmux split-window -h -c "$PWD"
 map eV &tmux split-window -h -c "$PWD" ~/Programs/lfub
 map ew &tmux new-window -c "$PWD"
 map eW &tmux new-window -c "$PWD" ~/Programs/lfub
+map <tab> &tmux next
+map <backtab> &tmux prev
+map gt &tmux next
+map gT &tmux prev
+map gn &tmux new-window -c "$PWD" ~/Programs/lfub
+map gc &tmux kill-pane
+map <c-w> :quit
 
 # navigation keybinds
 map gi &lf -remote "send $id cd /run/media/$USER"
@@ -307,6 +314,7 @@ map oe :set sortby ext; set noreverse; set info
 map or :set reverse!
 
 # chmod keybinds
+map = :push :chmod<space>
 map +X &chmod +X "$f";lf -remote "send $id reload"
 map +r &chmod +r "$f";lf -remote "send $id reload"
 map +s &chmod +s "$f";lf -remote "send $id reload"
