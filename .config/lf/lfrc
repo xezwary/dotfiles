@@ -227,7 +227,7 @@ map <backtab> &tmux prev
 map gt &tmux next
 map gT &tmux prev
 map gn &tmux new-window -c "$PWD" ~/Programs/lfub
-map gc &tmux kill-pane
+map gc :quit
 map <c-w> :quit
 
 # navigation keybinds
