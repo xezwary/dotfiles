@@ -6,6 +6,8 @@ README.*     33
 *.txt        37
 *.jpeg       33
 *.jpg        33
+*.JPG        33
+*.JPEG       33
 *.png        33
 *.gif        33
 *.tga        33
@@ -19,6 +21,7 @@ README.*     33
 *.mkv        35
 *.webm       35
 *.avi        35
+*.ts         35
 *.mp3        35
 *.flac       35
 *.wav        35
@@ -28,12 +31,6 @@ README.*     33
 *.m4v        35
 *.aac        35
 *.md         97
-ln           01;36
-di           1;94
-tw           1;94
-ow           1;94
-st           1;94
-ex           01;92
 *.tar        31
 *.tgz        31
 *.arc        31
@@ -81,3 +78,9 @@ ex           01;92
 *.dwm        31
 *.esd        31
 *.iso        31
+ln           01;36
+di           1;94
+tw           1;94
+ow           1;94
+st           1;94
+ex           01;92

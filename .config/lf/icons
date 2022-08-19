@@ -256,8 +256,7 @@ Vagrantfile             
 *.wmv                   
 *.flv                   
 *.avi                   
-*.JPG                   
-*.JPEG                  
+*.ts                    
 *.PNG                   
 *.bmp                   
 *.png                   
@@ -266,6 +265,8 @@ Vagrantfile             
 *.ico                   
 *.jpg                   
 *.jpeg                  
+*.JPG                   
+*.JPEG                  
 *.mjpg                  
 *.mjpeg                 
 *.gif                   
@@ -278,7 +279,6 @@ Vagrantfile             
 *.xpm                   
 *.tif                   
 *.tiff                  
-*.png                   
 *.svg                   
 *.svgz                  
 *.mng                   
