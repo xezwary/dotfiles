@@ -2,7 +2,7 @@
 ##Use lfub in Programs directory to launch lf
 
 ###My setup uses:
-###zsh glib2 ueberzug chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
+###zsh ffmpeg glib2 ueberzug chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
 ###Also luke's transadd script, proton-ge
 
 # basic vars
