@@ -51,7 +51,7 @@ bind-key X clear-filter
 bind-key s macro-prefix
 
 macro s edit-flags s
-macro f set browser "firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
+macro f set browser "~/Programs/LibreWolf.x86_64.AppImage %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro d set browser "~/Programs/firefox/firefox %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro b set browser "brave %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro w set browser "w3m %u"; open-in-browser; set browser "~/scripts/bash/commands/xclipit.sh %u"
