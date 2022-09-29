@@ -23,8 +23,8 @@ set cleaner '~/.config/lf/cleaner'
 # cmds/functions
 %[ $LF_LEVEL -eq 1 ] || echo "Warning: You're in a nested lf instance!"
 
-cmd mkdir &mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
-cmd touch &:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
+cmd mkdir &set -f&&mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
+cmd touch &set -f&&:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
 cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id down";lf -remote "send $id reload"
