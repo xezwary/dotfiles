@@ -110,7 +110,7 @@ cmd open ${{
 }}
 
 cmd openrifle ${{
-  clear&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f" )&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
+  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f" )&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
 ##Torrents
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&transadd "$f"&&clear
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&setsid -f qbittorrent "$f"
@@ -145,6 +145,9 @@ cmd openrifle ${{
   [[ $(echo $f|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&clear&&mpv --no-video -- $fx
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
+###Other
+#engrampa
+  [[ $(echo $f|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&setsid -f engrampa -- "$f" >/dev/null 2>&1
 
   [[ $iternum == 0 ]]&&break||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 ]]||[[ $cnum == "" ]];do echo -n "Open with: "&&read cnum;done
 done;clear
@@ -282,10 +285,10 @@ map yp &{{#Yank directory
   printf "%s" "$PWD" | xclip -selection clipboard}}
 map dd cut
 # filespace keybinds
-map du !{{#Directory disk usage
-  clear&&du --max-depth=1 -h --apparent-size}}
-map dU !{{#Directory disk usage sorted
-  clear&&du --max-depth=1 -h --apparent-size | sort -rh}}
+map du ${{#Directory disk usage
+  clear&&du --max-depth=1 -h --apparent-size|less}}
+map dU ${{#Directory disk usage sorted
+  clear&&du --max-depth=1 -h --apparent-size | sort -rh|less}}
 map df !{{#File system space usage
   clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "}}
 
