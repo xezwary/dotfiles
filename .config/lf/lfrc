@@ -110,7 +110,7 @@ cmd open ${{
 }}
 
 cmd openrifle ${{
-  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f" )&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
+  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
 ##Torrents
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&transadd "$f"&&clear
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&setsid -f qbittorrent "$f"
@@ -135,7 +135,7 @@ cmd openrifle ${{
 #nsxiv
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #GIMP
-  [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1
+  [[ $(echo $f|grep -E "\.dds$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1
 ##Video/audio
 #MPV
   [[ $(echo $f|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
@@ -260,7 +260,7 @@ map A rename # at the very end
 
 #smartbulkrename -- vimv if several items are selected
 map cw &{{#Smart bulk rename
-  set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id bulkrename"||lf -remote "send $id push A<c-u>"}}
+  set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id bulkrename"||lf -remote "send $id push A<c-u>";lf -remote "send $id reload"}}
 
 map I push A<c-a> # at the very beginning
 map a push A<a-b><c-b> # before extention
