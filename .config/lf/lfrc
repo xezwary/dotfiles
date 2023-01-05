@@ -118,7 +118,7 @@ cmd openrifle ${{
 #unar
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
 #aunpack
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractaunpack"
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractaunpack"
 ##Documents
 #Evince
   [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
@@ -147,7 +147,7 @@ cmd openrifle ${{
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
 ###Other
 #engrampa
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&setsid -f engrampa -- "$f" >/dev/null 2>&1
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&setsid -f engrampa -- "$f" >/dev/null 2>&1
 
   [[ $iternum == 0 ]]&&break||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 ]]||[[ $cnum == "" ]];do echo -n "Open with: "&&read cnum;done
 done;clear
