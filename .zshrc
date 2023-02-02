@@ -37,6 +37,7 @@ HISTSIZE=10000
 SAVEHIST=10000
 DIRSTACKSIZE=10
 WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
+export EDITOR='vim'
 
 # Auto escape URLs
 autoload -Uz bracketed-paste-magic url-quote-magic

@@ -122,6 +122,8 @@ cmd openrifle ${{
 ##Documents
 #Evince
   [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
+#Libreoffice
+  [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&setsid -f libreoffice "$f"
 #MComix
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&setsid -f mcomix -- "$f"
 #unar
@@ -178,7 +180,7 @@ cmd pasteand &{{
     move)[[ $overwrite == 'skip' ]]&&mv -n -- "$@" .||mv -f -- "$@" .;;
   esac
   rm ~/.local/share/lf/files
-  lf -remote "send clear"
+  lf -remote "send $id clear"
 }}
 
 cmd symlink &{{
