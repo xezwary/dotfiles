@@ -123,7 +123,7 @@ cmd openrifle ${{
 #Evince
   [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
 #Libreoffice
-  [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&setsid -f libreoffice "$f"
+  [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&setsid -f libreoffice "$f"
 #MComix
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&setsid -f mcomix -- "$f"
 #unar
@@ -205,6 +205,7 @@ map DD trash
 map <c-r> reload
 map <backspace> set hidden!
 map <backspace2> set hidden!
+map <enter> open
 #shell
 map s shell
 map S $$SHELL
