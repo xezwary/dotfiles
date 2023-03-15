@@ -4,7 +4,7 @@ image() {
 	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
     Xsize=$4&&Ysize=$5
     [[ -n "$TMUX" ]]&&Xsize=$(($4-1))&&Ysize=$(($5+1))
-    kitty +kitten icat --silent --stdin no --transfer-mode memory --place "$(($2-1))x$(($3-1))@$(($Xsize))x$Ysize" "$1" < /dev/null > /dev/tty
+    kitty +kitten icat --silent --stdin no --transfer-mode memory --place "$(($2-1))x$(($3-1))@${Xsize}x$Ysize" "$1" < /dev/null > /dev/tty
 		exit 1
 	else
 		chafa "$1" -s "$4x" --dither diffusion -c 240
@@ -78,8 +78,13 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 			ffmpegthumbnailer -i "$1" -o "${CACHE}.jpg" -s 0 -q 5
 		image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
 		;;
-	*.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.jxl|*.ico|*.svg|*.tga)
+	*.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.jxl|*.svg|*.tga)
 		image "$1" "$2" "$3" "$4" "$5"
+		;;
+  *.ico)
+		[ ! -f "${CACHE}.jpg" ] && \
+			convert -quality 90 "$1" "${CACHE}.jxl"
+		image "${CACHE}.jxl" "$2" "$3" "$4" "$5"
 		;;
 	*.ino)
 		batorcat --language=cpp "$1"
