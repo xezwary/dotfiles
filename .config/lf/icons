@@ -264,9 +264,9 @@ Vagrantfile             
 *.ico                   
 *.jpg                   
 *.jpeg                  
+*.jxl                   
 *.mjpg                  
 *.mjpeg                 
-*.gif                   
 *.bmp                   
 *.pbm                   
 *.pgm                   
