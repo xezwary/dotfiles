@@ -1,5 +1,4 @@
 # This config basically turns lf into Ranger with added features that I like.
-##Use lfub in Programs directory to launch lf
 
 ###My setup uses:
 ###Kitty zsh ffmpeg glib2 chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
