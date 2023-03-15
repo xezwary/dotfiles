@@ -2,7 +2,9 @@
 
 image() {
 	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
-    kitty +kitten icat --silent --stdin no --transfer-mode file --place "$(($2-1))x$(($3-1))@$4x$5" "$1" < /dev/null > /dev/tty
+    Xsize=$4&&Ysize=$5
+    [[ -n "$TMUX" ]]&&Xsize=$(($4-1))&&Ysize=$(($5+1))
+    kitty +kitten icat --silent --stdin no --transfer-mode memory --place "$(($2-1))x$(($3-1))@$(($Xsize))x$Ysize" "$1" < /dev/null > /dev/tty
 		exit 1
 	else
 		chafa "$1" -s "$4x" --dither diffusion -c 240

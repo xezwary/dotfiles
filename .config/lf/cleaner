@@ -1,2 +1,2 @@
 #!/bin/sh
-kitty +kitten icat --clear --stdin no --silent --transfer-mode file < /dev/null > /dev/tty
+kitty +kitten icat --clear --stdin no --transfer-mode memory < /dev/null > /dev/tty&&[[ -n "$TMUX" ]]&&lf -remote "send $id redraw"
