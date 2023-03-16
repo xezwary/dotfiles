@@ -79,7 +79,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 			ffmpegthumbnailer -i "$1" -o "${CACHE}.jpg" -s 0 -q 5
 		image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
 		;;
-	*.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.jxl|*.svg|*.tga)
+	*.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.jxl|*.svg|*.dds)
 		image "$1" "$2" "$3" "$4" "$5"
 		;;
   *.ico)
@@ -90,8 +90,9 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 	*.ino)
 		batorcat --language=cpp "$1"
 		;;
-	*)
-		batorcat "$1"
-		;;
+  *) case $(file --mime-type -Lb -- "$f") in
+    image/*) image "$1" "$2" "$3" "$4" "$5" ;;
+    *) batorcat "$1" ;;
+  esac
 esac
 exit 0
