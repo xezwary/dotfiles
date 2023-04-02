@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "quit"|socat - "/tmp/mpvSockets/000000"

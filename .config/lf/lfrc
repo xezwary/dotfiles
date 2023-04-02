@@ -125,13 +125,15 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&setsid -f libreoffice "$f"
 #MComix
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&setsid -f mcomix -- "$f"
+#Calibre ebook-viewer
+  [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&ebook-viewer --detach -- "$f"
 #unar
   [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
 ##Executables
 #Wine
-  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f wine "$f" >/dev/null 2>&1
+  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 setsid -f wine "$f" >/dev/null 2>&1
 #Proton
-  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 PROTON_HIDE_NVIDIA_GPU=0 PROTON_ENABLE_NVAPI=1 prime-run setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1
+  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1
 ##Images
 #nsxiv
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"
@@ -226,16 +228,16 @@ map X !$f
 map ee &tmux split-window -v $EDITOR "$f"
 map eE &tmux split-window -h $EDITOR "$f"
 map es &tmux split-window -v -c "$PWD"
-map eS &tmux split-window -v -c "$PWD" ~/Programs/lfub 
+map eS &tmux split-window -v -c "$PWD" lf 
 map ev &tmux split-window -h -c "$PWD"
-map eV &tmux split-window -h -c "$PWD" ~/Programs/lfub
+map eV &tmux split-window -h -c "$PWD" lf
 map ew &tmux new-window -c "$PWD"
-map eW &tmux new-window -c "$PWD" ~/Programs/lfub
+map eW &tmux new-window -c "$PWD" lf
 map <tab> &tmux next
 map <backtab> &tmux prev
 map gt &tmux next
 map gT &tmux prev
-map gn &tmux new-window -c "$PWD" ~/Programs/lfub
+map gn &tmux new-window -c "$PWD" lf
 
 # navigation keybinds
 map gi &lf -remote "send $id cd /run/media/$USER"
