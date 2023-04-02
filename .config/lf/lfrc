@@ -131,9 +131,9 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar"
 ##Executables
 #Wine
-  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 setsid -f wine "$f" >/dev/null 2>&1
+  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun wine "$f" >/dev/null 2>&1
 #Proton
-  [[ $(echo $f1|grep -E "\.exe$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 setsid -f ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1
+  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1
 ##Images
 #nsxiv
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open"

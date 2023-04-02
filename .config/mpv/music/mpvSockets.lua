@@ -30,6 +30,6 @@ os.execute("mkdir " .. join_paths(tempDir, "mpvSockets") .. " 2>/dev/null")
 mp.set_property("options/input-ipc-server", join_paths(tempDir, "mpvSockets", "000000"))
 
 function shutdown_handler()
-        os.remove(join_paths(tempDir, "mpvSockets", ppid))
+        os.remove(join_paths(tempDir, "mpvSockets", "000000"))
 end
 mp.register_event("shutdown", shutdown_handler)
