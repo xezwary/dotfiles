@@ -281,8 +281,6 @@ map um &{{#Unmount
 map y
 map d
 map yy copy
-map yp &{{#Yank paths
-  printf "%s" "$fx" | xclip -selection clipboard}}
 map yn &{{#Yank filenames
   basename -a -- $fx | head -c-1 | xclip -i -selection clipboard}}
 map yp &{{#Yank directory
