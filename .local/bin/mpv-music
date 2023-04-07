@@ -1,0 +1,2 @@
+#!/bin/bash
+while getopts tpn flag;do case "${flag}" in t)command="cycle pause";;p)command="playlist-prev";;n)command="quit";;esac;done;echo "$command"|socat - "/tmp/mpvSockets/000000"
