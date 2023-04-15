@@ -11,6 +11,7 @@ set ignorecase
 set incsearch
 set findlen 2
 set period 1
+set cursorpreviewfmt "\033[7m"
 set scrolloff 8
 set ratios 2:5:7
 set drawbox
@@ -223,21 +224,6 @@ map R $mimeopen -d -- "$f"
 #execute file
 map x $$f
 map X !$f
-
-# tmux keybinds
-map ee &tmux split-window -v $EDITOR "$f"
-map eE &tmux split-window -h $EDITOR "$f"
-map es &tmux split-window -v -c "$PWD"
-map eS &tmux split-window -v -c "$PWD" lf 
-map ev &tmux split-window -h -c "$PWD"
-map eV &tmux split-window -h -c "$PWD" lf
-map ew &tmux new-window -c "$PWD"
-map eW &tmux new-window -c "$PWD" lf
-map <tab> &tmux next
-map <backtab> &tmux prev
-map gt &tmux next
-map gT &tmux prev
-map gn &tmux new-window -c "$PWD" lf
 
 # navigation keybinds
 map gi &lf -remote "send $id cd /run/media/$USER"
