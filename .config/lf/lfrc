@@ -225,6 +225,7 @@ map R $mimeopen -d -- "$f"
 map x $$f
 map X !$f
 
+# kitty keybinds
 map ee $kitty @ launch --type window --location vsplit $EDITOR "$f"
 map eE $kitty @ launch --type window --location hsplit $EDITOR "$f"
 map es $kitty @ launch --type window --location hsplit --cwd $PWD
