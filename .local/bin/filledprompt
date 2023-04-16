@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+# https://github.com/kovidgoyal/kitty/issues/3702#issuecomment-858230438
+
+#trap sigwinch and pass it to the child we spawned
+#this allows the gnome-terminal window to be resized
+trap {
+ set rows [stty rows]
+ set cols [stty columns]
+ stty rows $rows columns $cols < $spawn_out(slave,name)
+} WINCH
+
+set arg1 [lindex $argv 0]
+
+# Get a zsh shell
+spawn -noecho zsh
+
+# Wait for a prompt
+set timeout 1
+expect "~ "
+
+# Type something
+send $arg1
+
+# Hand over control to the user
+interact
+
+exit
