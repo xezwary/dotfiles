@@ -118,6 +118,7 @@ alias la='ls -lha'
 alias nmpv='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia mpv'
 alias rangerd='~/Programs/ranger-master/ranger.py'
 alias wg='wget'
+[ "$TERM" = "xterm-kitty" ]&&alias ssh="kitty +kitten ssh"&&alias s1="~/scripts/kitty/session01.sh"
 
 say(){
   echo "$1"|festival --tts
