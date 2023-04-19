@@ -13,6 +13,7 @@ show-read-feeds yes
 scrolloff 10
 confirm-mark-feed-read no
 confirm-exit yes
+show-keymap-hint no
 
 bookmark-cmd "~/.newsboat/bookmark.sh"
 bookmark-interactive no

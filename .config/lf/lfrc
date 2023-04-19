@@ -232,11 +232,11 @@ map es $kitty @ launch --type window --location hsplit --cwd $PWD
 map eS $kitty @ launch --type window --location hsplit lf -- $PWD
 map ev $kitty @ launch --type window --location vsplit --cwd $PWD
 map eV $kitty @ launch --type window --location vsplit lf -- $PWD
-map ew $kitty @ launch --type tab --cwd $PWD
-map eW $kitty @ launch --type tab lf -- $PWD
+map ew $kitty @ launch --location neighbor --type tab --cwd $PWD
+map eW $kitty @ launch --location neighbor --type tab lf -- $PWD
 map <tab> $tabs="$(kitty @ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty @ focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
 map <backtab> $tabs="$(kitty @ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty @ focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
-map gn $kitty @ launch --type tab lf -- $PWD
+map gn $kitty @ launch --location=neighbor --type tab lf -- $PWD
 
 # navigation keybinds
 map gi &lf -remote "send $id cd /run/media/$USER"
