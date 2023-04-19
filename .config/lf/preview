@@ -2,10 +2,10 @@
 
 image() {
 	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
-    kitty +kitten icat --stdin no --transfer-mode memory --place "$(($2-1))x$(($3-1))@$4x$5" "$1" < /dev/null > /dev/tty
+    kitty +kitten icat --stdin no --transfer-mode memory --place "$2x$3@$4x$5" "$1" < /dev/null > /dev/tty
 		exit 1
 	else
-		chafa "$1" -s "$4x" --dither diffusion -c 240
+		chafa "$1" -f symbols -s "$4x" --dither diffusion -c 240
 	fi
 }
 
