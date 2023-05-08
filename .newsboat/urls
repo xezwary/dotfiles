@@ -4,7 +4,6 @@ https://openmw.org/en/feed/ Games
 https://github.com/MathiewMay/tux-mod-manager/releases.atom Games
 https://github.com/furiousg4m3r/Tales-of-Destiny-DC/releases.atom Games
 https://github.com/diasurgical/devilutionX/releases.atom Games
-https://github.com/streamlink/streamlink/releases.atom Linux
 https://github.com/yt-dlp/yt-dlp/releases.atom Linux
 https://blog.scssoft.com/feeds/posts/default?alt=rss Games
 https://linuxgameconsortium.com/feed/ Linux Games
@@ -20,6 +19,7 @@ https://github.com/GloriousEggroll/proton-ge-custom/releases.atom Linux
 https://github.com/gokcehan/lf/releases.atom Linux
 https://github.com/cirala/lfimg/commits/master.atom Linux
 filter:~/.newsboat/nsxivcodeberg.sh: Linux
+filter:~/.newsboat/twitch.sh: Twitch
 https://linuxgamecast.com/feed/lgcweeklyaudio/ Linux Games Podcast
 https://linuxgamecast.com/feed/lwdwaudio/ Linux Podcast
 https://www.distortedview.com/show/feed/podcast/ Podcast
@@ -119,6 +119,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC7ELKFxvLAWktmUsaFR004g "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCItAnWpuUZOEr4HXjkTBxcA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3n5uGu18FoCy23ggWWp8tA "YouTube Subscriptions" HoloLiveEN
 https://nitter.net/nanashimumei_en/rss nitter
+https://www.youtube.com/feeds/videos.xml?channel_id=UCdqDlrY_4p3z_Ho4hS2-4Zw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC5T0tXJN5CrMZUEJuz4oovw "YouTube Subscriptions"
 https://odysee.com/$/rss/@Nerdrotic/35c00dd34d1b1b0c3c28601c2788cceadc5f6454 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCMwGHR0BTZuLsmjY_NT5Pwg "YouTube Subscriptions" HoloLiveEN
@@ -152,6 +153,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC7bsEtScmC137Lmr-uVCGVg "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCJ4O6PWA47f6XbCgrLQNqEQ "YouTube Subscriptions" "Phase Connect"
 https://odysee.com/$/rss/@Rimmy:1 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC5gsrZTtWG_AqDFmuq81Q-w "YouTube Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCYX_iGrhBnFt0dyXwSi7U4Q "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCxCJ93k6uk-qarMgFpX-Otw "YouTube Subscriptions"
 https://odysee.com/$/rss/@ScammerRevolts/b0e489f986c345aef23c4a48d91cbcf5a6fdb9ac "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCxzC4EngIsMrPmbm6Nxvb-A "YouTube Subscriptions"
