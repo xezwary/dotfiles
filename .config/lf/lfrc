@@ -62,7 +62,7 @@ cmd open ${{
     ;;
 
     #video/audio -- force gui window if video files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts)
+    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
       isvideo=0&&for i in $fx;do [[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$i"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&mpv --audio-display=no -- $fx||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null >/dev/null 2>&1
     ;;
  
@@ -259,7 +259,7 @@ map <insert> push :touch<space>
 # rename keybinds
 map c
 map a rename # before extention
-map I push A<c-a> # at the very beginning
+map I push a<c-a> # at the very beginning
 map A push a<c-e> # at the very end
 #map cw push A<c-u> # new rename
 
