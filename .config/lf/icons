@@ -1,4 +1,4 @@
-.dotfiles/              
+.dotfiles/              
 .config/                
 .git/                   
 .github/                
@@ -9,15 +9,15 @@
 Desktop/                
 Documents/              
 Downloads/              
-Dotfiles/               
-Dropbox/                
-Games/                  
+Dotfiles/               
+Dropbox/                
+Games/                  󰊗
 Music/                  
 node_modules/           
 Pictures/               
-Programs/               
+Programs/               
 Public/                 
-scripts/                
+scripts/                󰅩
 Templates/              
 Videos/                 
 vimwiki/                
