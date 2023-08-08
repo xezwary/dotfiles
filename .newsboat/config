@@ -61,6 +61,7 @@ macro n set browser "~/scripts/bash/commands/mpv_youtubedl_quality.sh %u"; open-
 macro t set browser "setsid -f alacritty -e ~/scripts/bash/commands/mpv_youtubedl_quality2.sh %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro p set browser "~/.newsboat/playlist.sh %u"; open-in-browser-noninteractively; set browser "~/scripts/bash/commands/xclipit.sh %u"
 macro x set browser "~/scripts/bash/commands/xclipit.sh %u"; open-in-browser-noninteractively
+macro i set browser "clear;kitty icat %u ;tput civis >/dev/tty 2>/dev/null;read -r -s -n 1;tput cnorm >/dev/tty 2>/dev/null;kitty icat --clear"
 
 color listnormal color15 default
 color listfocus color0 color15 standout bold
