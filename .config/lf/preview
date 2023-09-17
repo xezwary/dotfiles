@@ -1,7 +1,7 @@
 #!/bin/sh
 
 image() {
-	if [ -n "$DISPLAY" ] && [ -z "$WAYLAND_DISPLAY" ]; then
+	if [ -n "$DISPLAY" ] || [ -z "$WAYLAND_DISPLAY" ]; then
     kitty +kitten icat --stdin no --transfer-mode memory --place "$2x$3@$4x$5" "$1" < /dev/null > /dev/tty
 		exit 1
 	else
@@ -89,7 +89,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 	*.ino)
 		batorcat --language=cpp "$1"
 		;;
-  *) case $(file --mime-type -Lb -- "$f") in
+  *) case $(file --mime-type -Lb -- "$1") in
     image/*) image "$1" "$2" "$3" "$4" "$5" ;;
     *) file -ibL "$1" | grep -q text && batorcat "$1" || file -Lb "$1" ;; 
   esac

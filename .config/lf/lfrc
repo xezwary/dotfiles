@@ -148,7 +148,7 @@ cmd openrifle ${{
 #MPV audio only
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&clear&&mpv --no-video -- $fx
 #Tenacity
-  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f tenacity -- $f >/dev/null 2>&1
+  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1
 ###Other
 #engrampa
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&setsid -f engrampa -- "$f" >/dev/null 2>&1
@@ -200,7 +200,6 @@ cmd symlink &{{
 }}
 
 # bindings
-map w
 map gc :quit
 map <c-w> :quit
 map DD trash
@@ -212,13 +211,17 @@ map <enter> open
 map s shell
 map S $$SHELL
 map @ push :%<space>"$f"<home><c-f>
+#View processes in htop
+map w $htop -p `pstree -p $id | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }'`
 #file handling
 map e
 map E $$EDITOR -- "$f"
-map t &{{#tag
+map t &{{#Tag
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id tag-toggle"||lf -remote "send $id :tag-toggle; down"}}
 #map r $mimeopen --ask -- "$f"
 map r openrifle
+map i ${{#Image preview
+  [[ $(file --mime-type -Lb -- "$f"|grep "image/"|wc -l) > 0 ]]&&tput civis >/dev/tty 2>/dev/null&&clear&&chafa --scale max "$f"&&read -s -r -n 1 ;tput cnorm >/dev/tty 2>/dev/null}}
 #set default for opening file
 map R $mimeopen -d -- "$f"
 #execute file
