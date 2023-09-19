@@ -324,16 +324,16 @@ map or :set reverse!
 
 # chmod keybinds
 map = :push :chmod<space>
-map +X &chmod +X "$f";lf -remote "send $id reload"
-map +r &chmod +r "$f";lf -remote "send $id reload"
-map +s &chmod +s "$f";lf -remote "send $id reload"
-map +t &chmod +t "$f";lf -remote "send $id reload"
-map +w &chmod +w "$f";lf -remote "send $id reload"
-map +x &chmod +x "$f";lf -remote "send $id reload"
+map +X chmod +X
+map +r chmod +r
+map +s chmod +s
+map +t chmod +t
+map +w chmod +w
+map +x chmod +x
 
-map -X &chmod -X "$f";lf -remote "send $id reload"
-map -r &chmod -r "$f";lf -remote "send $id reload"
-map -s &chmod -s "$f";lf -remote "send $id reload"
-map -t &chmod -t "$f";lf -remote "send $id reload"
-map -w &chmod -w "$f";lf -remote "send $id reload"
-map -x &chmod -x "$f";lf -remote "send $id reload"
+map -X chmod -X
+map -r chmod -r
+map -s chmod -s
+map -t chmod -t
+map -w chmod -w
+map -x chmod -x
