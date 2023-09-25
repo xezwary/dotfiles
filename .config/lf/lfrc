@@ -7,6 +7,7 @@
 # basic vars
 set shellopts '-eu'
 set ifs "\n"
+set filesep "\n"
 set ignorecase
 set incsearch
 set findlen 2
@@ -99,7 +100,7 @@ cmd open ${{
       ;;
       #images
       image/*)
-        [[ $(echo "$fs"|wc -l) -lt 1 ]]&&imagelist=$(find -L . -maxdepth 1 -type f|sort -fV)&&for i in $imagelist;do echo $i;done|setsid -f nsxiv -g 2560x1440 -s f -a -q -n $(echo "${imagelist[*]}"|grep -n -- "./$(basename $f|sed -e 's/[][\.$*]/\\&/g')$"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|setsid -f nsxiv -g 2560x1440 -s f -a -q -- -
+        [[ $(echo "$fs"|wc -w) == 0 ]]&&imagelist=$(find -L . -maxdepth 1 -type f|sort -fV)&&for i in $imagelist;do echo $i;done|setsid -f nsxiv -g 2560x1440 -s f -a -q -n $(echo "${imagelist[*]}"|grep -n -- "./$(basename $f|sed -e 's/[][\.$*]/\\&/g')$"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|setsid -f nsxiv -g 2560x1440 -s f -a -q -- -
       ;;
       #other
       *)
