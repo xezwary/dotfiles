@@ -148,6 +148,8 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.m4v$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
 #MPV audio only
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&clear&&mpv --no-video -- $fx;[[ $cnum == $iternum ]]&&exit 0
+#MPV force window
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx 2>/dev/null >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
 ###Other

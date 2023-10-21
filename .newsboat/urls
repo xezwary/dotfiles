@@ -13,7 +13,7 @@ https://www.phoronix.com/rss.php Linux
 https://9to5linux.com/feed Linux
 https://forum.manjaro.org/c/announcements/stable-updates/12.rss Linux
 https://www.archlinux.org/feeds/news/ Linux
-https://codeberg.org/librewolf/appimage.rss
+https://codeberg.org/librewolf/appimage.rss Linux
 https://gitlab.com/librewolf-community/browser/appimage.atom "~LibreWolf AppImage" "Linux"
 https://github.com/NVIDIA/open-gpu-kernel-modules/releases.atom Linux
 https://github.com/GloriousEggroll/proton-ge-custom/releases.atom Linux
@@ -45,7 +45,6 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCrpnlUxPbkaQ-ZfookZqXyw "Yo
 https://odysee.com/$/rss/@bobdoyle/c439f944044fbade4b4fcc827be248f010e37a29 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC18ju52OET36bdewLRHzPdQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCO_aKKYxn4tvrqPjcTzZ6EQ "YouTube Subscriptions" HoloLiveEN
-https://nitter.kavin.rocks/ceresfauna/rss nitter HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UC21uZkfXpT8rPY-gPgMiCwA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCYZtp0YIxYOipX15v_h_jnA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC9wbdkwvYVSgKtOZ3Oov98g "YouTube Subscriptions"
@@ -61,10 +60,12 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCrjImfv2PReA1VhEfNaDOYw "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UC4nJnJ-HO5vVbGlJ14rf5yg "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg "YouTube Subscriptions" Podcast
 https://odysee.com/$/rss/@DistroTube/2332c0df0bd5e046db04fe7e3e79f756d35a1523 "Odysee Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC98iRMvRqUxRD6GP4NtRskw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCNa9i8ifGJRlK2yWgM9DcOA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCZOnoLKzoBItcEk5OsES2TA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC4BZtFgtCuHUt0p8J-XENiA "YouTube Subscriptions"
 https://odysee.com/$/rss/@EsemicolonR:f "Odysee Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC0w_dvkIwnXzMak6gfeioRQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-E-oMwc7SHuiK5gT_ule8Q "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCupmjRr7kPgzXKh-cPxxGbg "YouTube Subscriptions" "Phase Connect"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCzSHr-wO24dtLB0-KkiY3MQ "YouTube Subscriptions"
@@ -73,7 +74,6 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCOZfpWD7SM5t1Mmk0_aJdfw "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCbWcXB0PoqOsAvAdfzWMf0w "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCRIM8mF54IY2U13SoTjcKag "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCoSrY_IQQVpmIRZ9Xf-y93g "YouTube Subscriptions" HoloLiveEN
-https://nitter.kavin.rocks/gawrgura/rss nitter HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7dF9qfBMXrSlaaFFDvV_Yg "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC55OV4HSSKJEthG4ulsKkyw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCkf4VIqu3Acnfzuk3kRIFwA "YouTube Subscriptions"
@@ -96,10 +96,10 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC8Q7XEy86Q7T-3kNpNjYgwA "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8rcEBzJSleTkf_-agPM20g "YouTube Subscriptions" HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UCbQ4fbi0fy3d6Hb7q2FIATw "YouTube Subscriptions"
 https://odysee.com/$/rss/@ItsAGundam/80d83a515872832dff87986f3791a646f52ec1e0 "Odysee Subscriptions"
-https://nitter.kavin.rocks/GundamIsHere/rss nitter
 https://www.bitchute.com/feeds/rss/channel/itsagundam "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC8VNj18hKxw1I8de-FybM-Q "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCP9c9zdVEj_Ndw4OmC1xVAw "YouTube Subscriptions"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCkb-r702uhx4-6Lrmetp-Ow "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCBNG0osIBAprVcZZ3ic84vw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCdJdEguB1F1CiYe7OEi3SBg "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC6lUqvh42Oc3XL19Edgd9QA "YouTube Subscriptions"
@@ -120,7 +120,6 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCnOEKr71245AS33SpVntNEQ "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UC7ELKFxvLAWktmUsaFR004g "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCItAnWpuUZOEr4HXjkTBxcA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC3n5uGu18FoCy23ggWWp8tA "YouTube Subscriptions" HoloLiveEN
-https://nitter.kavin.rocks/nanashimumei_en/rss nitter HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UCdqDlrY_4p3z_Ho4hS2-4Zw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC5T0tXJN5CrMZUEJuz4oovw "YouTube Subscriptions"
 https://odysee.com/$/rss/@Nerdrotic/35c00dd34d1b1b0c3c28601c2788cceadc5f6454 "Odysee Subscriptions"
@@ -133,13 +132,11 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCV5wuGZmg_FGQp25uzKKDaw "Yo
 https://www.youtube.com/feeds/videos.xml?channel_id=UCO1ITICo8MLHGAXR1uzFwjA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCiyDpPerqXkicZmnxKB9qZQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCmbs8T6MWqUHP1tIQvSgKrg "YouTube Subscriptions" HoloLiveEN
-https://nitter.kavin.rocks/ourokronii/rss nitter HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UCVo_KgPNsDKxHwzib7uarCw "YouTube Subscriptions" "Phase Connect"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-lHJZR3Gqxm24_Vd_AJ5Yw "YouTube Subscriptions"
 https://odysee.com/$/rss/@PINE64/abc60a14b8457c0f8d3b116ec7a7f5c78d158ca7 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCJ46YTYBQVXsfsp8-HryoUA "YouTube Subscriptions" "Phase Connect"
 https://misskey.io/@pippa.atom misskey "Phase Connect"
-https://nitter.kavin.rocks/pipkinpippa/rss nitter "Phase Connect"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCn-K7GIs62ENvdQe6ZZk9-w "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCH0VeQ9x2cUI4FDUT8xhaKw "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCodK-9eXEm_hWSDDfLr4QzA "YouTube Subscriptions"
@@ -195,7 +192,6 @@ https://odysee.com/$/rss/@umami:7 "Odysee Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCjXJYPsKxoJyc-1RPB6dSyw "YouTube Subscriptions" "Phase Connect"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCTZPfdnseGUvPRK5gPxLbKQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCyl1z3jo3XHR1riLFKG5UAg "YouTube Subscriptions" HoloLiveEN
-https://nitter.kavin.rocks/watsonameliaEN/rss nitter HoloLiveEN
 https://www.youtube.com/feeds/videos.xml?channel_id=UCy1zUiuM8c-cQRaef4ABfmA "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-NfY72l3Tn-c2qg0iHDUlQ "YouTube Subscriptions"
 https://www.youtube.com/feeds/videos.xml?channel_id=UC-uPNldCnPeasW6iUSD2ODQ "YouTube Subscriptions"

@@ -10,3 +10,5 @@ transmission-remote -t$TR_TORRENT_ID -S
 
 # Put computer to sleep if no torrents are downloading
 #sleep 2 && [[ $(transmission-remote -l | grep -v 'Stopped\|Finished\|ETA\|Sum:' | wc -l) == 0 ]] && systemctl suspend
+# Send exit request if no torrents are downloading
+#sleep 2 && [[ $(transmission-remote -l | grep -v 'Stopped\|Finished\|ETA\|Sum:' | wc -l) == 0 ]] && transmission-remote --exit
