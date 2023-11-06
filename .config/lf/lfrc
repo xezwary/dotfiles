@@ -113,48 +113,48 @@ cmd open ${{
 cmd openrifle ${{
   clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
 ##Torrents
-  [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&transadd "$f"&&clear;[[ $cnum == $iternum ]]&&exit 0
-  [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&setsid -f qbittorrent "$f";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&(transadd "$f"&&clear;exit 0)
+  [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&(setsid -f qbittorrent "$f";exit 0)
 ##Archives
 #unar
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
 #aunpack
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractaunpack";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractaunpack";exit 0)
 ##Documents
 #Evince
-  [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Evince"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
 #Libreoffice
-  [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&setsid -f libreoffice "$f";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&(setsid -f libreoffice "$f";exit 0)
 #MComix
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&setsid -f mcomix -- "$f";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&(setsid -f mcomix -- "$f";exit 0)
 #Calibre ebook-viewer
-  [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&ebook-viewer --detach -- "$f";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&(ebook-viewer --detach -- "$f";exit 0)
 #unar
-  [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&lf -remote "send $id extractunar";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
 ##Executables
 #Wine
-  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun wine "$f" >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&(DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun wine "$f" >/dev/null 2>&1;exit 0)
 #Proton
-  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Proton"&&[[ $cnum == $iternum ]]&&(DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun ~/.local/share/Steam/compatibilitytools.d/GE-Proton/files/bin/wine "$f" >/dev/null 2>&1;exit 0)
 ##Images
 #nsxiv
-  [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
 #GIMP
-  [[ $(echo $f1|grep -E "\.dds$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&setsid -f gimp -- $f >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.dds$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&(setsid -f gimp -- $f >/dev/null 2>&1;exit 0)
 ##Video/audio
 #MPV
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&lf -remote "send $id open";[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
 #VLC
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.m4v$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.m4v$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&(QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1;exit 0)
 #MPV audio only
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&clear&&mpv --no-video -- $fx;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&(clear&&mpv --no-video -- $fx;exit 0)
 #MPV force window
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx 2>/dev/null >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx 2>/dev/null >/dev/null 2>&1;exit 0)
 #Tenacity
-  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1;exit 0)
 ###Other
 #engrampa
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&setsid -f engrampa -- "$f" >/dev/null 2>&1;[[ $cnum == $iternum ]]&&exit 0
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&(setsid -f engrampa -- "$f" >/dev/null 2>&1;exit 0)
 
   [[ $iternum == 0 ]]&&break||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 ]]||[[ $cnum == "" ]];do echo -n "Open with: "&&read cnum;done
 done;clear

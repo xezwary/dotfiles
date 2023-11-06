@@ -40,9 +40,9 @@ WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider
 export EDITOR='vim'
 
 # Auto escape URLs
-autoload -Uz bracketed-paste-magic url-quote-magic
-zle -N bracketed-paste bracketed-paste-magic
-zle -N self-insert url-quote-magic
+#autoload -Uz bracketed-paste-magic url-quote-magic
+#zle -N bracketed-paste bracketed-paste-magic
+#zle -N self-insert url-quote-magic
 
 # vi mode
 bindkey -v
