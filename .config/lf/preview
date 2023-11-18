@@ -56,7 +56,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
 		ssconvert --export-type=Gnumeric_stf:stf_csv "$1" "fd://1" | batorcat --language=csv
 		;;
 	*.wav|*.mp3|*.flac|*.m4a|*.wma|*.ape|*.ac3|*.og[agx]|*.spx|*.opus|*.as[fx]|*.mka)
-		[ ! -f "${CACHE}.jpg" ]&&ffmpeg -i "$1" -f lavfi -i color=c=black:s=640x320 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=640x320:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "$CACHE.jpg"&&convert "${CACHE}.jpg" -trim "${CACHE}.jpg";chafa -f symbols "${CACHE}.jpg" -s "$4x"&&exiftool "$1"
+		[ ! -f "${CACHE}.jpg" ]&&ffmpeg -i "$1" -f lavfi -i color=c=black:s=850x150 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=850x150:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "$CACHE.jpg";kitty +kitten icat --stdin no --transfer-mode memory --place "$2x$3@$4x$5" "${CACHE}.jpg" < /dev/null > /dev/tty&&echo -en "\n\n\n\n\n";exiftool "$1";exit 1
 		;;
 	*.pdf)
 		[ ! -f "${CACHE}.jpg" ] && \
