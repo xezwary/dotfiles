@@ -226,7 +226,7 @@ map t &{{#Tag
 #map r $mimeopen --ask -- "$f"
 map r openrifle
 map i ${{#Image preview
-  [[ $(file --mime-type -Lb -- "$f"|grep "image/"|wc -l) > 0 ]]&&(tput civis >/dev/tty 2>/dev/null&&clear&&chafa --scale max "$f"&&read -s -r -n 1 ;tput cnorm >/dev/tty 2>/dev/null)||[[ $(file --mime-type -Lb -- "$f"|grep "video/"|wc -l) > 0 ]]&&([[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$f"|wc -l) == 0 ]]||~/.config/lf/preview "$f")||([[ -d "$f" ]]||~/.config/lf/preview "$f"|$PAGER)}}
+  [[ $(file --mime-type -Lb -- "$f"|grep -E "video/|image/"|wc -l) > 0 ]]&&([[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$f"|wc -l) == 0 ]]||~/.config/lf/preview "$f")||([[ -d "$f" ]]||~/.config/lf/preview "$f"|$PAGER);kitty icat --clear}}
 #set default for opening file
 map R $mimeopen -d -- "$f"
 #execute file
