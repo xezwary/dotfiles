@@ -35,6 +35,11 @@ cmd restore $set -f&&clear&&gio trash --list|grep -- "$(basename -a -- $fx|sed -
 cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx);lf -remote "send $id reload"
 
 cmd open-with %"$@" $f
+cmd toggle-preview %[[ "$lf_preview" = "true" ]]&&lf -remote "send $id :set preview false; set ratios 1:6"||lf -remote "send $id :set preview true; set ratios 2:5:7"
+
+cmd sel-add %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&echo "$fx" >> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
+cmd sel-remove %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
+cmd sel-toggle %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);files=$(comm --output-delimiter="" -3 <(tail -n +2 ~/.local/share/lf/files|sort) <(echo "$fx"|sort)|tr -d '\0')&&printf "$1\n$files" > ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
 
 #archives
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath -s --relative-to=$PWD -- $fx)
@@ -226,7 +231,7 @@ map t &{{#Tag
 #map r $mimeopen --ask -- "$f"
 map r openrifle
 map i ${{#Image preview
-  [[ $(file --mime-type -Lb -- "$f"|grep -E "video/|image/"|wc -l) > 0 ]]&&([[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$f"|wc -l) == 0 ]]||~/.config/lf/preview "$f")||([[ -d "$f" ]]||~/.config/lf/preview "$f"|$PAGER);kitty icat --clear}}
+  [[ $(file --mime-type -Lb -- "$f"|grep -E "video/|image/"|wc -l) > 0 ]]&&~/.config/lf/preview "$f"||([[ -d "$f" ]]||~/.config/lf/preview "$f"|$PAGER);kitty icat --clear}}
 #set default for opening file
 map R $mimeopen -d -- "$f"
 #execute file
@@ -300,6 +305,12 @@ map dU ${{#Directory disk usage sorted
   clear&&du --max-depth=1 -h --apparent-size | sort -rh|less}}
 map df !{{#File system space usage
   clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "}}
+map da sel-add move
+map ya sel-add copy
+map dr sel-remove move
+map yr sel-remove copy
+map dt sel-toggle move
+map yt sel-toggle copy
 
 # paste keybinds
 map p
@@ -326,6 +337,9 @@ map oa :set sortby atime; set reverse; set info atime
 map oc :set sortby ctime; set reverse; set info ctime
 map oe :set sortby ext; set noreverse; set info
 map or :set reverse!
+
+# preview toggle
+map zp toggle-preview
 
 # chmod keybinds
 map = :push :chmod<space>
