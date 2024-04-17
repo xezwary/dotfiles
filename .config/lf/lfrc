@@ -222,7 +222,7 @@ map s shell
 map S $$SHELL
 map @ push :%<space>"$f"<home><c-f>
 #View processes in htop
-map w $htop -p `pstree -p $id | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }'`
+map w $htop -p `pstree -p $KITTY_PID | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }'`
 #file handling
 map e
 map E $$EDITOR -- "$f"
@@ -230,13 +230,16 @@ map t &{{#Tag
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id tag-toggle"||lf -remote "send $id :tag-toggle; down"}}
 #map r $mimeopen --ask -- "$f"
 map r openrifle
-map i ${{#Image preview
+map i ${{#Fullscreen preview
   [[ $(file --mime-type -Lb -- "$f"|grep -E "video/|image/"|wc -l) > 0 ]]&&~/.config/lf/preview "$f"||([[ -d "$f" ]]||~/.config/lf/preview "$f"|$PAGER);kitty icat --clear}}
 #set default for opening file
 map R $mimeopen -d -- "$f"
 #execute file
 map x $$f
 map X !$f
+
+# command mode
+cmap <tab> cmd-menu-complete
 
 # kitty keybinds
 map ee $kitten @launch --type window --location vsplit --copy-env $EDITOR "$f"
@@ -331,11 +334,17 @@ map se
 map o
 map zr
 map on :set sortby natural; set noreverse; set info
+map oN :set sortby natural; set reverse; set info
 map os :set sortby size; set reverse; set info size
+map oS :set sortby size; set noreverse; set info size
 map om :set sortby time; set reverse; set info time
+map oM :set sortby time; set noreverse; set info time
 map oa :set sortby atime; set reverse; set info atime
+map oA :set sortby atime; set noreverse; set info atime
 map oc :set sortby ctime; set reverse; set info ctime
+map oC :set sortby ctime; set noreverse; set info ctime
 map oe :set sortby ext; set noreverse; set info
+map oE :set sortby ext; set reverse; set info
 map or :set reverse!
 
 # preview toggle
