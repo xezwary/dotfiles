@@ -1,7 +1,7 @@
 # This config basically turns lf into Ranger with added features that I like.
 
 ###My setup uses:
-###Kitty zsh ffmpeg glib2 chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
+###Kitty bash zsh ffmpeg glib2 chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
 ###Also luke's transadd script, proton-ge
 
 # basic vars
@@ -37,9 +37,9 @@ cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx);lf -remote
 cmd open-with %"$@" $f
 cmd toggle-preview %[[ "$lf_preview" = "true" ]]&&lf -remote "send $id :set preview false; set ratios 1:6"||lf -remote "send $id :set preview true; set ratios 2:5:7"
 
-cmd sel-add %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&echo "$fx" >> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
-cmd sel-remove %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
-cmd sel-toggle %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);files=$(comm --output-delimiter="" -3 <(tail -n +2 ~/.local/share/lf/files|sort) <(echo "$fx"|sort)|tr -d '\0')&&printf "$1\n$files" > ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
+cmd sel-add %[[ $(grep "$fx" ~/.local/share/lf/files|wc -l) > 0 ]]&&exit 0||[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&echo "$fx">> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
+cmd sel-remove %[[ $(grep "$fx" ~/.local/share/lf/files|wc -l) < 1 ]]&&exit 0||[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);sed -i "1s/.*/$1/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
+cmd sel-toggle %[[ "$1" = "move" ]]||[[ "$1" = "copy" ]]||set -- $(cat ~/.local/share/lf/files);files=$(comm --output-delimiter="" -3 <(tail -n +2 ~/.local/share/lf/files|sort) <(printf "$fx"|sort)|tr -d '\0')&&echo -e "$1\n$files"> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
 
 #archives
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath -s --relative-to=$PWD -- $fx)
