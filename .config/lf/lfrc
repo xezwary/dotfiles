@@ -30,8 +30,7 @@ cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 
 cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id load"
 cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
-cmd restore $set -f&&clear&&gio trash --list|grep -- "$(basename -a -- $fx|sed -e 's/[][\.$*]/\\&/g')$"&&echo -n "Restore? [y/n]"&&read ans&&[[ "$ans" == "y" ]]&&for i in $fx;do gio trash --restore "$(gio trash --list|grep -- "$(basename -a -- $i|sed -e 's/[][\.$*]/\\&/g')$"|awk '{print $1; }')";done&&lf -remote "send $id reload"||exit 0
-
+cmd restore $set -f&&clear&&files=$(echo "$(gio trash --list|grep "$(basename -a -- "$fx"|sed -e 's/[][\.$*]/\\&/g')$"|awk '{print $1; }')")&&[[ $(echo "$files"|wc -l) > 0 ]]&&filesfile=$(mktemp)&&trap "rm -f $filesfile" 0 2 3 15&&echo -e "Files to restore:\n$files">>$filesfile&&$EDITOR $filesfile&&for i in $(tail -n+2 $filesfile);do gio trash --restore "$i";done;lf -remote "send $id reload"
 cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx);lf -remote "send $id reload"
 
 cmd open-with %"$@" $f
