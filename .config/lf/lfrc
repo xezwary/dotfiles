@@ -1,7 +1,7 @@
 # This config basically turns lf into Ranger with added features that I like.
 
 ###My setup uses:
-###Kitty bash zsh ffmpeg glib2 chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
+###Kitty bash zsh ffmpeg trash-cli chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
 ###Also luke's transadd script, proton-ge
 
 # basic vars
@@ -27,11 +27,11 @@ set cleaner '~/.config/lf/cleaner'
 cmd mkdir &set -f&&mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd touch &set -f&&:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
-
-cmd trash &set -f&&gio trash -- $fx;lf -remote "send $id load"
-cmd empty &set -f&&gio trash --empty;lf -remote "send $id reload"
-cmd restore $set -f&&clear&&files=$(echo "$(gio trash --list|grep "$(basename -a -- "$fx"|sed -e 's/[][\.$*]/\\&/g')$"|awk '{print $1; }')")&&[[ $(echo "$files"|wc -l) > 0 ]]&&filesfile=$(mktemp)&&trap "rm -f $filesfile" 0 2 3 15&&echo -e "Files to restore:\n$files">>$filesfile&&$EDITOR $filesfile&&for i in $(tail -n+2 $filesfile);do gio trash --restore "$i";done;lf -remote "send $id reload"
 cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx);lf -remote "send $id reload"
+
+cmd trash &set -f&&trash-put -- $fx;lf -remote "send $id load"
+cmd empty %set -f&&trash-empty;lf -remote "send $id reload"
+cmd restore $clear;tput cup $(($(tput lines)/3));trash-restore;lf -remote "send $id reload"
 
 cmd open-with %"$@" $f
 cmd toggle-preview %[[ "$lf_preview" = "true" ]]&&lf -remote "send $id :set preview false; set ratios 1:6"||lf -remote "send $id :set preview true; set ratios 2:5:7"
