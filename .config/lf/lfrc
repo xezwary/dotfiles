@@ -36,9 +36,9 @@ cmd restore $clear;tput cup $(($(tput lines)/3));trash-restore;lf -remote "send 
 cmd open-with %"$@" $f
 cmd toggle-preview %[[ "$lf_preview" = "true" ]]&&lf -remote "send $id :set preview false; set ratios 1:6"||lf -remote "send $id :set preview true; set ratios 2:5:7"
 
-cmd sel-add &mode="$1"&&files="$(comm --output-delimiter="" -23 <(printf "$fx"|sort) <(tail -n+2 ~/.local/share/lf/files|sort))"&&[[ $(echo "$files"|wc -w) < 1 ]]&&exit 0||[[ $(echo "$mode"|grep "copy|move"|wc -l) > 0 ]]||set -- $(< ~/.local/share/lf/files|sed -n '1p');sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&echo "$files">> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
-cmd sel-remove &mode="$1"&&[[ $(echo "$mode"|grep "copy|move"|wc -l) > 0 ]]||set -- $(< ~/.local/share/lf/files|sed -n '1p');sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
-cmd sel-toggle &mode="$1"&&[[ $(echo "$mode"|grep "copy|move"|wc -l) > 0 ]]||set -- $(< ~/.local/share/lf/files|sed -n '1p');files=$(comm --output-delimiter="" -3 <(tail -n +2 ~/.local/share/lf/files|sort) <(printf "$fx"|sort)|tr -d '\0')&&[[ $(echo "$files"|wc -w) < 1 ]]&&echo "$mode"> ~/.local/share/lf/files||echo -e "$mode\n$files"> ~/.local/share/lf/files;lf -remote "send $id :unselect; sync"
+cmd sel-add &set +u&&mode="$1"&&files="$(comm --output-delimiter="" -23 <(printf "$fx"|sort) <(tail -n+2 ~/.local/share/lf/files|sort))"&&[[ $(echo "$files"|wc -w) < 1 ]]&&exit 0||[[ $(echo "$mode"|grep -E "copy|move"|wc -w) > 0 ]]||read -r mode<~/.local/share/lf/files;sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&echo "$files">> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
+cmd sel-remove &set +u&&mode="$1"&&[[ $(echo "$mode"|grep -E "copy|move"|wc -w) > 0 ]]||read -r mode<~/.local/share/lf/files;sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
+cmd sel-toggle &set +u&&mode="$1"&&[[ $(echo "$mode"|grep -E "copy|move"|wc -w) > 0 ]]||read -r mode<~/.local/share/lf/files;files=$(comm --output-delimiter="" -3 <(tail -n +2 ~/.local/share/lf/files|sort) <(printf "$fx"|sort)|tr -d '\0')&&[[ $(echo "$files"|wc -w) < 1 ]]&&echo "$mode"> ~/.local/share/lf/files||echo -e "$mode\n$files"> ~/.local/share/lf/files;lf -remote "send $id :unselect; sync"
 
 #archives
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath -s --relative-to=$PWD -- $fx)
@@ -190,7 +190,7 @@ cmd pasteand &{{
     ;;
     move)[[ $overwrite == 'skip' ]]&&mv -n -- "$@" .||mv -f -- "$@" .;;
   esac
-  rm ~/.local/share/lf/files
+  echo "$mode"> ~/.local/share/lf/files
   lf -remote "send $id clear"
 }}
 
