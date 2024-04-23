@@ -68,13 +68,13 @@ cmd open ${{
 
     #video/audio -- force gui window if video files are present
     *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
-      isvideo=0&&for i in $fx;do [[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$i"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&(clear;tput cup $(($(tput lines)/3));mpv --audio-display=no -- $fx)||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx 2>/dev/null >/dev/null 2>&1
+      isvideo=0&&for i in $fx;do [[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$i"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&(clear;tput cup $(($(tput lines)/3));mpv --audio-display=no -- $fx)||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx >/dev/null 2>&1
     ;;
  
     #images -- sends file list of current directory, or selection if multiple files
     ##feh
     #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga)
-    #  [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- 1>/dev/null 2>/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- 1>/dev/null 2>/dev/null 2>&1 & ;;
+    #  [[ $(echo "$fx"|wc -l) == 1 ]]&&find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga)'|sort -fV|feh --start-at "$(basename $f)" -f- -- >/dev/null 2>&1||for i in $fx;do echo $i;done|sort -fV|feh -f- -- >/dev/null 2>&1 & ;;
     ##nsxiv
     #*.jpg|*.png|*.jpeg|*.JPG|*.JPEG|*.PNG|*.webp|*.ico|*.tga|*.gif)
     #  [[ $(echo "$fx"|wc -l) == 1 ]]&&imagelist=$(find . -maxdepth 1 -regextype posix-extended -iregex '.*(jpg|png|jpeg|webp|ico|tga|gif)'|sort -fV)&&for i in $imagelist;do echo $i;done|nsxiv -g 2560x1440 -s f -a -q -n $(echo "${imagelist[*]}"|grep --line-number --fixed-strings -- "./$(basename $f)"|cut -f1 -d:) -- -||for i in $fx;do echo $i;done|sort -fV|nsxiv -g 2560x1440 -s f -a -q -- - &
@@ -96,7 +96,7 @@ cmd open ${{
       ;;
       #video
       video/*)
-        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" 2>/dev/null >/dev/null 2>&1
+        __NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- "$f" >/dev/null 2>&1
       ;;
       #audio
       audio/*)
@@ -155,7 +155,7 @@ cmd openrifle ${{
 #MPV audio only
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&(clear&&mpv --no-video -- $fx;exit 0)
 #MPV force window
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx 2>/dev/null >/dev/null 2>&1;exit 0)
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx >/dev/null 2>&1;exit 0)
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1;exit 0)
 ###Other
