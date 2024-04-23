@@ -27,7 +27,7 @@ set cleaner '~/.config/lf/cleaner'
 cmd mkdir &set -f&&mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd touch &set -f&&:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
-cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx);lf -remote "send $id reload"
+cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx|sed -e "s|^./||");lf -remote "send $id reload"
 
 cmd trash &set -f&&trash-put -- $fx;lf -remote "send $id load"
 cmd empty %set -f&&trash-empty;lf -remote "send $id reload"
@@ -203,7 +203,7 @@ cmd symlink &{{
     exit 0
   fi
   for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&num=$((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath -s --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
-  rm ~/.local/share/lf/files
+  echo "$mode"> ~/.local/share/lf/files
   lf -remote "send $id :clear; reload"
 }}
 
@@ -299,6 +299,12 @@ map yn &{{#Yank filenames
 map yp &{{#Yank directory
   printf "%s" "$PWD" | xclip -selection clipboard}}
 map dd cut
+map da sel-add move
+map ya sel-add copy
+map dr sel-remove move
+map yr sel-remove copy
+map dt sel-toggle move
+map yt sel-toggle copy
 # filespace keybinds
 map du ${{#Directory disk usage
   clear&&du --max-depth=1 -h --apparent-size|less}}
@@ -306,12 +312,6 @@ map dU ${{#Directory disk usage sorted
   clear&&du --max-depth=1 -h --apparent-size | sort -rh|less}}
 map df !{{#File system space usage
   clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "}}
-map da sel-add move
-map ya sel-add copy
-map dr sel-remove move
-map yr sel-remove copy
-map dt sel-toggle move
-map yt sel-toggle copy
 
 # paste keybinds
 map p
