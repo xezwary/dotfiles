@@ -186,7 +186,7 @@ cmd pasteand &{{
   lf -remote "send $id clear"
 }}
 
-cmd symlink !{{
+cmd symlink &{{
   linktype=$1
   set -- $(cat ~/.local/share/lf/files)
   shift
