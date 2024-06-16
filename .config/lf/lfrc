@@ -114,6 +114,7 @@ cmd open ${{
   esac
 }}
 
+#Opener that replaces Rangers rifle
 cmd openrifle ${{
   clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
 ##Torrents
@@ -287,9 +288,11 @@ map y
 map d
 map yy copy
 map yn &{{#Yank filenames
-  basename -a -- $fx | head -c-1 | xclip -i -selection clipboard}}
-map yp &{{#Yank directory
-  printf "%s" "$PWD" | xclip -selection clipboard}}
+  basename -a -- $fx|head -c-1|xclip -selection clipboard}}
+map yd &{{#Yank current directory
+  printf "%s" "$PWD"|xclip -selection clipboard}}
+map yp &{{#Yank full paths
+  printf "%s" "$fx"|xclip -selection clipboard}}
 map dd cut
 map da sel-add move
 map ya sel-add copy
