@@ -42,6 +42,18 @@ cmd sel-toggle &set +u&&mode="$1"&&[[ $(echo "$mode"|grep -E "copy|move"|wc -w) 
 
 #archives
 cmd compress !set -f&&zip -r "$(echo $* | tr ' ' '\ ').zip" $(realpath -s --relative-to=$PWD -- $fx)
+cmd extract !{{
+  clear;set -f&&for i in $fx;do [ -f $i ]&&case $i in
+    *.tar.bz2)tar xjfv "$i" --one-top-level;;
+    *.tar.gz)tar xzfv "$i" --one-top-level;;
+    *.tar)tar xfv "$i" --one-top-level;;
+    *.tbz2)tar xjfv "$i" --one-top-level;;
+    *.tgz)tar xzfv "$i" --one-top-level;;
+    *.zip)dir="./$(basename -- ${i%.zip})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.zip})~$num~"&&num=$((++num));done;unzip -d$dir -x "$i";;
+    *.rar)dir="./$(basename -- ${i%.rar})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.rar})~$num~"&&num=$((++num));done;unrar x -op$dir "$i";;
+    *.7z)dir="./$(basename -- ${i%.7z})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.7z})~$num~"&&num=$((++num));done;7z e "$i" -o$dir;;
+    *)echo "Skipping $(basename -- $i)...";;
+  esac;done}}
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
 cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
@@ -125,6 +137,8 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
 #aunpack
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractaunpack";exit 0)
+#extract command
+  [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
 ##Documents
 #Zathura
   [[ $(echo $f1|grep -E "\.pdf$|\.epub$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f";exit 0)
