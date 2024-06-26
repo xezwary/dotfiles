@@ -30,7 +30,7 @@ cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx|sed -e "s|^./||");lf -remote "send $id reload"
 
 cmd trash &set -f&&trash-put -- $fx;lf -remote "send $id load"
-cmd empty %set -f&&trash-empty;lf -remote "send $id reload"
+cmd empty &trash-empty;lf -remote "send $id :reload; echo Trash emptied"
 cmd restore $clear;tput cup $(($(tput lines)/3));trash-restore;lf -remote "send $id reload"
 
 cmd open-with %"$@" $f
@@ -247,16 +247,16 @@ map X !$f
 cmap <tab> cmd-menu-complete
 
 # kitty keybinds
-map ee $kitten @launch --type window --location vsplit --copy-env $EDITOR "$f"
-map eE $kitten @launch --type window --location hsplit --copy-env $EDITOR "$f"
-map es $kitten @launch --type window --location hsplit --copy-env --cwd $PWD
-map eS $kitten @launch --type window --location hsplit --copy-env lf -- $PWD
-map ev $kitten @launch --type window --location vsplit --copy-env --cwd $PWD
-map eV $kitten @launch --type window --location vsplit --copy-env lf -- $PWD
-map ew $kitten @launch --location neighbor --type tab --copy-env --cwd $PWD
-map eW $kitten @launch --location neighbor --type tab --copy-env lf -- $PWD
-map <tab> $tabs="$(kitty @ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty @ focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
-map <backtab> $tabs="$(kitty @ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty @ focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
+map ee $kitty @launch --type window --location vsplit --copy-env $EDITOR "$f"
+map eE $kitty @launch --type window --location hsplit --copy-env $EDITOR "$f"
+map es $kitty @launch --type window --location hsplit --copy-env --cwd $PWD
+map eS $kitty @launch --type window --location hsplit --copy-env lf -- $PWD
+map ev $kitty @launch --type window --location vsplit --copy-env --cwd $PWD
+map eV $kitty @launch --type window --location vsplit --copy-env lf -- $PWD
+map ew $kitty @launch --location neighbor --type tab --copy-env --cwd $PWD
+map eW $kitty @launch --location neighbor --type tab --copy-env lf -- $PWD
+map <tab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty@ focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
+map <backtab> $tabs="$(kitty@ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty@ focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
 map gn $kitten @launch --location=neighbor --type tab --cwd current --copy-env lf
 
 # navigation keybinds
