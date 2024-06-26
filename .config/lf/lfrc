@@ -255,9 +255,9 @@ map ev $kitty @launch --type window --location vsplit --copy-env --cwd $PWD
 map eV $kitty @launch --type window --location vsplit --copy-env lf -- $PWD
 map ew $kitty @launch --location neighbor --type tab --copy-env --cwd $PWD
 map eW $kitty @launch --location neighbor --type tab --copy-env lf -- $PWD
-map <tab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty@ focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
-map <backtab> $tabs="$(kitty@ ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty@ focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
-map gn $kitten @launch --location=neighbor --type tab --cwd current --copy-env lf
+map <tab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
+map <backtab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
+map gn $kitty @launch --location=neighbor --type tab --cwd current --copy-env lf
 
 # navigation keybinds
 map gi &lf -remote "send $id cd /run/media/$USER"
