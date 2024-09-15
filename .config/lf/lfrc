@@ -46,6 +46,7 @@ cmd extract !{{
   clear;set -f&&for i in $fx;do [ -f $i ]&&case $i in
     *.tar.bz2)tar xjfv "$i" --one-top-level;;
     *.tar.gz)tar xzfv "$i" --one-top-level;;
+    *.tar.zst)tar xfv "$i" --use-compress-program=unzstd --one-top-level;;
     *.tar)tar xfv "$i" --one-top-level;;
     *.tbz2)tar xjfv "$i" --one-top-level;;
     *.tgz)tar xzfv "$i" --one-top-level;;
@@ -138,7 +139,7 @@ cmd openrifle ${{
 #aunpack
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractaunpack";exit 0)
 #extract command
-  [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
+  [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$|\.tar\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
 ##Documents
 #Zathura
   [[ $(echo $f1|grep -E "\.pdf$|\.epub$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f";exit 0)
