@@ -35,6 +35,8 @@ cmd restore $clear;tput cup $(($(tput lines)/3));trash-restore;lf -remote "send 
 
 cmd open-with %"$@" $f
 cmd toggle-preview %[[ "$lf_preview" = "true" ]]&&lf -remote "send $id :set preview false; set ratios 1:6"||lf -remote "send $id :set preview true; set ratios 2:5:7"
+cmd tabnext $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
+cmd tabback $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
 
 cmd sel-add &set +u&&mode="$1"&&files="$(comm --output-delimiter="" -23 <(printf "$fx"|sort) <(tail -n+2 ~/.local/share/lf/files|sort))"&&[[ $(echo "$files"|wc -w) < 1 ]]&&exit 0||[[ $(echo "$mode"|grep -E "copy|move"|wc -w) > 0 ]]||read -r mode<~/.local/share/lf/files;sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&echo "$files">> ~/.local/share/lf/files&&lf -remote "send $id :unselect; sync"
 cmd sel-remove &set +u&&mode="$1"&&[[ $(echo "$mode"|grep -E "copy|move"|wc -w) > 0 ]]||read -r mode<~/.local/share/lf/files;sed -i "1s/.*/$mode/" ~/.local/share/lf/files&&while read -r file; do file=$(echo "$file"|sed -e 's/[][\.$*]/\\&/g')&&sed -i "\|$file|d" ~/.local/share/lf/files;done <<< "$fx"&&lf -remote "send $id :unselect; sync"
@@ -216,6 +218,9 @@ cmd symlink &{{
 }}
 
 # bindings
+map Q :quit!
+map ZZ :quit
+map ZQ :quit
 map gc :quit
 map <c-w> :quit
 map DD trash
@@ -256,8 +261,10 @@ map ev $kitty @launch --type window --location vsplit --copy-env --cwd $PWD
 map eV $kitty @launch --type window --location vsplit --copy-env lf -- $PWD
 map ew $kitty @launch --location neighbor --type tab --copy-env --cwd $PWD
 map eW $kitty @launch --location neighbor --type tab --copy-env lf -- $PWD
-map <tab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,")"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|tail -n 1)\n$tabs\n$(echo "$tabs"|tac|tail -n 1)"|grep -C 1 "focus"|tail -n 1|tr -dc "0-9")"
-map <backtab> $tabs="$(kitty @ls|grep -v "         "|grep "       \"id\":\|       \"is_focused\": true,"|tac)"&&kitty @focus-tab --match "id:$(echo -e "$(echo "$tabs"|grep -v "focus"|tail -n 1)\n$tabs\n$(echo "$tabs"|grep -v "focus"|tac|tail -n 1)"|tac|grep -B 2 -A 1 "focus"|tac|tail -n 1|tr -dc "0-9")"
+map <tab> tabnext
+map <backtab> tabback
+map gt tabnext
+map gT tabback
 map gn $kitty @launch --location=neighbor --type tab --cwd current --copy-env lf
 
 # navigation keybinds
@@ -304,6 +311,8 @@ map d
 map yy copy
 map yn &{{#Yank filenames
   basename -a -- $fx|head -c-1|xclip -selection clipboard}}
+map y. &{{#Yank filenames without extension
+  for i in $(basename -a -- $fx);do echo -en "${i%.*}\n";done|head -c-1|xclip -selection clipboard}}
 map yd &{{#Yank current directory
   printf "%s" "$PWD"|xclip -selection clipboard}}
 map yp &{{#Yank full paths
@@ -355,8 +364,10 @@ map oe :set sortby ext; set noreverse; set info
 map oE :set sortby ext; set reverse; set info
 map or :set reverse!
 
-# preview toggle
+# setting toggles
 map zp toggle-preview
+map zm %{{#toggle mouse
+[ "$lf_mouse" = "true" ]&&lf -remote "send $id :set mouse false"||lf -remote "send $id :set mouse true"}}
 
 # chmod keybinds
 map = :push :chmod<space>

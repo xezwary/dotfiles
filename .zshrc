@@ -1,3 +1,4 @@
+fastfetch
 ## Options section
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
@@ -112,7 +113,7 @@ alias ts='tmux new-session -s'
 alias tl='tmux list-sessions'
 alias tksv='tmux kill-server'
 alias tkss='tmux kill-session -t'
-alias la='ls -lha'
+alias la='ls -lha --color=auto'
 alias nmpv='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia mpv'
 alias rangerd='~/Programs/ranger-master/ranger.py'
 alias wg='wget'
