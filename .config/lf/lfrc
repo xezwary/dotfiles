@@ -2,7 +2,7 @@
 
 ###My setup uses:
 ###Kitty bash zsh ffmpeg trash-cli chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
-###Also luke's transadd script, proton-ge
+###Also luke's transadd script, proton-ge, Mcomix comicthumb script
 
 # basic vars
 set shellopts '-eu'
@@ -28,6 +28,7 @@ cmd mkdir &set -f&&mkdir -p -- "$(echo $* | tr ' ' '\ ')";lf -remote "send $id r
 cmd touch &set -f&&:>> "$(echo $* | tr ' ' '\ ')";lf -remote "send $id reload"
 cmd chmod &set -f&&chmod $* -- $fx;lf -remote "send $id reload"
 cmd bulkrename $set -f&&vimv $(realpath -s --relative-to=$PWD -- $fx|sed -e "s|^./||");lf -remote "send $id reload"
+cmd edit $$EDITOR -- "$f"
 
 cmd trash &set -f&&trash-put -- $fx;lf -remote "send $id load"
 cmd empty &trash-empty;lf -remote "send $id :reload; echo Trash emptied"
@@ -236,7 +237,7 @@ map @ push :%<space>"$f"<home><c-f>
 map w $htop -p `pstree -p $KITTY_PID | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }'`
 #file handling
 map e
-map E $$EDITOR -- "$f"
+map E edit
 map t &{{#Tag
   set -f&&[[ $(echo "$fx"|wc -l)>1 ]]&&lf -remote "send $id tag-toggle"||lf -remote "send $id :tag-toggle; down"}}
 #map r $mimeopen --ask -- "$f"
@@ -368,6 +369,10 @@ map or :set reverse!
 map zp toggle-preview
 map zm %{{#toggle mouse
 [ "$lf_mouse" = "true" ]&&lf -remote "send $id :set mouse false"||lf -remote "send $id :set mouse true"}}
+map zd %{{#toggle dirfirst
+[ "$lf_dirfirst" = "true" ]&&lf -remote "send $id :set dirfirst false"||lf -remote "send $id :set dirfirst true"}}
+map zc %{{#toggle ignorecase
+[ "$lf_ignorecase" = "true" ]&&lf -remote "send $id :set ignorecase false"||lf -remote "send $id :set ignorecase true"}}
 
 # chmod keybinds
 map = :push :chmod<space>
