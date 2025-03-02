@@ -251,7 +251,7 @@ Vagrantfile             
 *.mkv                   
 *.webm                  
 *.mp4                   
-*.mpeg                   
+*.mpeg                  
 *.m4v                   
 *.mp4v                  
 *.wmv                   
@@ -282,7 +282,6 @@ Vagrantfile             
 *.mng                   
 *.pcx                   
 *.mpg                   
-*.mpeg                  
 *.m2v                   
 *.ogm                   
 *.vob                   
