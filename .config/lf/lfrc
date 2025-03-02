@@ -55,7 +55,7 @@ cmd extract !{{
     *.tgz)tar xzfv "$i" --one-top-level;;
     *.zip)dir="./$(basename -- ${i%.zip})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.zip})~$num~"&&num=$((++num));done;unzip -d$dir -x "$i";;
     *.rar)dir="./$(basename -- ${i%.rar})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.rar})~$num~"&&num=$((++num));done;unrar x -op$dir "$i";;
-    *.7z)dir="./$(basename -- ${i%.7z})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.7z})~$num~"&&num=$((++num));done;7z e "$i" -o$dir;;
+    *.7z)dir="./$(basename -- ${i%.7z})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.7z})~$num~"&&num=$((++num));done;7z x "$i" -o$dir;;
     *)echo "Skipping $(basename -- $i)...";;
   esac;done}}
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done

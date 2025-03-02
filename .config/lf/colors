@@ -19,9 +19,12 @@ README.*     33
 *.webp       33
 *.avi        35
 *.mkv        35
+*.mov        35
 *.mp4        35
+*.mpeg       35
 *.ts         35
 *.webm       35
+*.wmv        35
 *.aac        35
 *.flac       35
 *.m4a        35
