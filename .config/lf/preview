@@ -58,28 +58,28 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
     ssconvert --export-type=Gnumeric_stf:stf_csv "$1" "fd://1" | batorcat --language=csv
     ;;
   *.wav|*.mp3|*.flac|*.m4a|*.wma|*.ape|*.ac3|*.og[agx]|*.spx|*.opus|*.as[fx]|*.mka)
-    [ ! -f "${CACHE}.jpg" ]&&ffmpeg -i "$1" -f lavfi -i color=c=black:s=850x150 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=850x150:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "$CACHE.jpg";[[ -n "$DISPLAY" ]]&&[[ "$3" ]]&&kitty +kitten icat --stdin no --transfer-mode memory --place "$2x$3@$4x$5" "${CACHE}.jpg" < /dev/null > /dev/tty||chafa "${CACHE}.jpg"&&echo -en "\n\n\n\n\n";exiftool "$1";exit 1
+    [ ! -f "${CACHE}.jpg" ]&&ffmpeg -i "$1" -f lavfi -i color=c=black:s=850x150 -filter_complex "[0:a]aformat=channel_layouts=mono,showwavespic=s=850x150:colors=white[fg];[1:v][fg]overlay=format=auto" -frames:v 1 "${CACHE}.jpg";[[ -n "$DISPLAY" ]]&&[[ "$3" ]]&&kitty +kitten icat --stdin no --transfer-mode memory --place "$2x$3@$4x$5" "${CACHE}.jpg" < /dev/null > /dev/tty||chafa "${CACHE}.jpg"&&echo -en "\n\n\n\n\n";exiftool "$1";exit 1
     ;;
   *.pdf)
     [ ! -f "${CACHE}.jpg" ] && \
-      pdftoppm -jpeg -f 1 -singlefile "$1" "$CACHE"
+      pdftoppm -jpeg -f 1 -singlefile "$1" "${CACHE}"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.epub|*.mobi)
-    [ ! -f "$CACHE" ] && \
-      gnome-epub-thumbnailer -s 1024 "$1" "$CACHE.jpg"
-    image "$CACHE.jpg" "$2" "$3" "$4" "$5"
+    [ ! -f "${CACHE}.jpg" ] && \
+      gnome-epub-thumbnailer -s 1024 "$1" "${CACHE}"&&magick -quality 80 "${CACHE}" "${CACHE}.jpg"&&rm "${CACHE}"
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.cbz|*.cbr|*.cbt)
-    [ ! -f "$CACHE" ] && \
-      ~/Documents/git/mcomix-git/comicthumb "$1" "$CACHE" 1024
-    image "$CACHE" "$2" "$3" "$4" "$5"
+    [ ! -f "${CACHE}.jpg" ] && \
+      ~/Documents/git/mcomix-git/comicthumb "$1" "${CACHE}" 1024&&magick -quality 80 "${CACHE}" "${CACHE}.jpg"&&rm "${CACHE}"
+    image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)
     [ ! -f "${CACHE}.jpg" ] && \
       #~/scripts/git/ffmpegthumbnailer/build/ffmpegthumbnailer -i "$1" -o "${CACHE}.jpg" -s 0 -q 5
       #ffmpeg -ss 5 -i "$1" -vframes 1 -an "${CACHE}.jpg"
-      mtn -x "$(basename -- "${CACHE}")" -o ".jpg" -O "$HOME/.cache/lf/" -w 1920 -c1 -r1 -it -- "$1"
+      mtn -x "$(basename -- "${CACHE}")" -o ".jpg" -O "$HOME/.cache/lf/" -w 1920 -j 80 -c1 -r1 -it -- "$1"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.bmp|*.jpg|*.jpeg|*.png|*.xpm|*.webp|*.tiff|*.gif|*.jfif|*.jxl|*.svg|*.dds)
@@ -87,7 +87,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
     ;;
   *.ico)
     [ ! -f "${CACHE}.jxl" ] && \
-      convert -quality 90 "$1" "${CACHE}.jxl"
+      magick -quality 90 "$1" "${CACHE}.jxl"
     image "${CACHE}.jxl" "$2" "$3" "$4" "$5"
     ;;
   *.ino)
