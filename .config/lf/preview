@@ -62,17 +62,17 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
     ;;
   *.pdf)
     [ ! -f "${CACHE}.jpg" ] && \
-      pdftoppm -jpeg -f 1 -singlefile "$1" "${CACHE}"
+      pdftoppm -jpeg -f 1 -singlefile "$1" "${CACHE}"&&magick "${CACHE}.jpg" -quality 80 -resize x1080\> "${CACHE}.jpg"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.epub|*.mobi)
     [ ! -f "${CACHE}.jpg" ] && \
-      gnome-epub-thumbnailer -s 1024 "$1" "${CACHE}"&&magick -quality 80 "${CACHE}" "${CACHE}.jpg"&&rm "${CACHE}"
+      gnome-epub-thumbnailer -s 1024 "$1" "${CACHE}"&&magick "${CACHE}" -quality 80 "${CACHE}.jpg"&&rm "${CACHE}"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.cbz|*.cbr|*.cbt)
     [ ! -f "${CACHE}.jpg" ] && \
-      ~/Documents/git/mcomix-git/comicthumb "$1" "${CACHE}" 1024&&magick -quality 80 "${CACHE}" "${CACHE}.jpg"&&rm "${CACHE}"
+      ~/Documents/git/mcomix-git/comicthumb "$1" "${CACHE}" 1024&&magick "${CACHE}" -quality 80 "${CACHE}.jpg"&&rm "${CACHE}"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)
