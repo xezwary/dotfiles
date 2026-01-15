@@ -262,7 +262,6 @@ Vagrantfile             
 *.bmp                   
 *.png                   
 *.webp                  
-*.avif                  
 *.gif                   
 *.ico                   
 *.jpg                   
