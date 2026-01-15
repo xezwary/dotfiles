@@ -1,7 +1,7 @@
 # This config basically turns lf into Ranger with added features that I like.
 
 ###My setup uses:
-###Kitty bash zsh ffmpeg trash-cli chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv atool unar 7z mcomix wine
+###Kitty bash zsh ffmpeg trash-cli chafa nerd-fonts-terminus glow odt2txt catdoc docx2txt gnumeric xclip vimv nsxiv mpv mtn atool unar 7z mcomix wine
 ###Also luke's transadd script, proton-ge, Mcomix comicthumb script
 
 # basic vars
@@ -83,7 +83,7 @@ cmd open ${{
     ;;
 
     #video/audio -- force gui window if video files are present
-    *.mp4|*.webm|*.mkv|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
+    *.mp4|*.webm|*.mkv|*.mka|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
       isvideo=0&&for i in $fx;do [[ $(ffprobe -show_entries stream=codec_name -v quiet -of csv="p=0" -select_streams V -- "$i"|wc -l) == 0 ]]||isvideo=1;done&&[[ $isvideo == 0 ]]&&(clear;tput cup $(($(tput lines)/3));mpv --audio-display=no -- $fx)||[[ $isvideo == 0 ]]&&exit 0;__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia setsid -f mpv --no-terminal --force-window --quiet -- $fx >/dev/null 2>&1
     ;;
  
@@ -168,15 +168,15 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.dds$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&(setsid -f gimp -- $f >/dev/null 2>&1;exit 0)
 ##Video/audio
 #MPV
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mka$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
 #VLC
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.m4v$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&(QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1;exit 0)
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.m4v$|\.mka$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep "video/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - VLC"&&[[ $cnum == $iternum ]]&&(QT_SCALE_FACTOR=2 setsid -f vlc -- "$f" >/dev/null 2>&1;exit 0)
 #MPV audio only
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&(clear&&mpv --no-video -- $fx;exit 0)
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mka$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&(clear&&mpv --no-video -- $fx;exit 0)
 #MPV force window
-  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx >/dev/null 2>&1;exit 0)
+  [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mka$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 ]]||[[ $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx >/dev/null 2>&1;exit 0)
 #Tenacity
-  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f org.tenacityaudio.Tenacity -- $f >/dev/null 2>&1;exit 0)
+  [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f org.tenacityaudio.Tenacity -- "$f" >/dev/null 2>&1;exit 0)
 ###Other
 #engrampa
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 ]]&&iternum=$(($iternum+1))&&echo "$iternum - Engrampa"&&[[ $cnum == $iternum ]]&&(setsid -f engrampa -- "$f" >/dev/null 2>&1;exit 0)

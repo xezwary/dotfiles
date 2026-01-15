@@ -16,20 +16,9 @@ batorcat() {
   shift
   if command -v bat > /dev/null 2>&1
   then
-    bat --color=always --style=plain --pager=never "$file" "$@"
+    bat --color=always --style=plain --paging=never "$file" "$@"
   else
     cat "$file"
-  fi
-}
-
-glowormdcat() {
-  file="$1"
-  shift
-  if command -v glow > /dev/null 2>&1
-  then
-    glow -s dark "$file"
-  else
-    mdcat "$file"
   fi
 }
 
@@ -44,7 +33,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
   *.zip|*.jar|*.war|*.ear|*.oxt) unzip -l "$1" ;;
   *.gz) gzip -l "$1" ;;
   *.rar) unrar l "$1" ;;
-  *.md) glowormdcat "$1" ;;
+  *.md|*.json) batorcat "$1" ;;
   *.7z) 7z l "$1" ;;
   *.[1-8]) man "$1" | col -b ;;
   *.o) nm "$1";;
@@ -72,7 +61,7 @@ case "$(printf "%s\n" "$(readlink -f "$1")" | awk '{print tolower($0)}')" in
     ;;
   *.cbz|*.cbr|*.cbt)
     [ ! -f "${CACHE}.jpg" ] && \
-      ~/Documents/git/mcomix-git/comicthumb "$1" "${CACHE}" 1024&&magick "${CACHE}" -quality 80 "${CACHE}.jpg"&&rm "${CACHE}"
+      comicthumb "$1" "${CACHE}" 1024&&magick "${CACHE}" -quality 80 "${CACHE}.jpg"&&rm "${CACHE}"
     image "${CACHE}.jpg" "$2" "$3" "$4" "$5"
     ;;
   *.avi|*.mp4|*.wmv|*.dat|*.3gp|*.ogv|*.mkv|*.mpg|*.mpeg|*.vob|*.fl[icv]|*.m2v|*.mov|*.webm|*.ts|*.mts|*.m4v|*.r[am]|*.qt|*.divx)

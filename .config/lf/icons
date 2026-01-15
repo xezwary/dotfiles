@@ -258,9 +258,11 @@ Vagrantfile             
 *.flv                   
 *.avi                   
 *.ts                    
+*.avif                  
 *.bmp                   
 *.png                   
 *.webp                  
+*.avif                  
 *.gif                   
 *.ico                   
 *.jpg                   
