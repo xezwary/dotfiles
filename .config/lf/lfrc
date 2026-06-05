@@ -64,7 +64,7 @@ cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
 # open handler
 cmd open ${{
-  ext="$(echo ${f##*.}|tr "[:upper:]" "[:lower:]")"&&if [[ "$ext" == "$(echo $f|tr "[:upper]" "[:lower:]")" ]];then ext="";fi&&mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
+  ext="$(echo ${f##*.}|sed 's/.*/\L&/')"&&if [[ "$ext" == "$(echo $f|sed 's/.*/\L&/')" ]];then ext="";fi&&mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
     #torrents
     *.torrent)
       transmission-show "$f" | "$PAGER"
@@ -122,7 +122,7 @@ cmd open ${{
 
 #Opener that replaces Rangers rifle
 cmd openrifle ${{
-  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 && $cnum == "" ]]&&break
+  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|sed 's/.*/\L&/')&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 && $cnum == "" ]]&&break
 ##Torrents
   #[[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&(transadd "$f"&&clear;exit 0)
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&(setsid -f qbittorrent "$f";exit 0)
