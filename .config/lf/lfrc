@@ -64,7 +64,7 @@ cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
 # open handler
 cmd open ${{
-  ext="$(echo ${f##*.})|tr "[:upper:]" "[:lower:]")"&&if [[ "$ext" == "$(echo $f|tr "[:upper]" "[:lower:]")" ]];then ext="";fi&&mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
+  ext="$(echo ${f##*.}|tr "[:upper:]" "[:lower:]")"&&if [[ "$ext" == "$(echo $f|tr "[:upper]" "[:lower:]")" ]];then ext="";fi&&mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
     #torrents
     *.torrent)
       transmission-show "$f" | "$PAGER"
@@ -122,7 +122,7 @@ cmd open ${{
 
 #Opener that replaces Rangers rifle
 cmd openrifle ${{
-  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 ]]&&[[ $cnum == "" ]]&&break
+  clear&&tput cup $(($(tput lines)/3))&&tput bold&&cnum="first"&&fmime=$(file --mime-type -Lb -- "$f")&&f1=$(echo "$f"|tr "[:upper:]" "[:lower:]")&&for ((loopnum=1;loopnum<=2;loopnum++));do iternum=0&&[[ $loopnum == 2 && $cnum == "" ]]&&break
 ##Torrents
   #[[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&(transadd "$f"&&clear;exit 0)
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&(setsid -f qbittorrent "$f";exit 0)
@@ -155,7 +155,7 @@ cmd openrifle ${{
 #nsxiv
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - nsxiv"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id open";exit 0)
   [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - nsxiv shuffle current dir"&&[[ $cnum == $iternum ]]&&(imagelist=$(find -L . -maxdepth 1 -type f|sort -R)&&for i in $imagelist;do echo $i;done|setsid -f nsxiv -g 2560x1440 -s f -a -q -- - >/dev/null 2>&1;exit 0)
-  [[ $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&[[ $(echo "$fs"|wc -l) > 1 ]]&&((iternum++))&&echo "$iternum - nsxiv shuffle current sel"&&[[ $cnum == $iternum ]]&&(for i in $fx;do echo $i;done|sort -R|setsid -f nsxiv -g 2560x1440 -s f -a -q -- - >/dev/null 2>&1;exit 0)
+  [[ $(echo $fmime|grep "image/"|wc -l) > 0 && $(echo "$fs"|wc -l) > 1 ]]&&((iternum++))&&echo "$iternum - nsxiv shuffle current sel"&&[[ $cnum == $iternum ]]&&(for i in $fx;do echo $i;done|sort -R|setsid -f nsxiv -g 2560x1440 -s f -a -q -- - >/dev/null 2>&1;exit 0)
 #GIMP
   [[ $(echo $f1|grep -E "\.dds$|\.jxl"|wc -l) > 0 || $(echo $fmime|grep "image/"|wc -l) > 0 ]]&&((iternum++))&&echo "$iternum - GIMP"&&[[ $cnum == $iternum ]]&&(setsid -f gimp -- $f >/dev/null 2>&1;exit 0)
 ##Video/audio
