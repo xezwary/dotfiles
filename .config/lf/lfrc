@@ -85,7 +85,7 @@ cmd open ${{
 
     #video/audio -- force gui window if video files are present
     video/*|audio/*|*.mp4|*.webm|*.mkv|*.mka|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
-    isvideo=$( (count=0&&for i in $fx;do (( $count > 20 ))&&break||[[ $(file --mime-type -- "$i") == *"video/"* ]]&&echo "video"&&break;((++count));done) )&&[[ $isvideo != "video" ]]&&(clear;tput cup $(($(tput lines)/3));mpv --audio-display=no -- $fx)||[[ $isvideo != "video" ]]&&exit 0;setsid -f mpv --no-terminal --force-window --quiet -- $fx >/dev/null 2>&1
+      isvideo=$( (count=0&&for i in $fx;do (( $count > 20 ))&&break||[[ $(file --mime-type -- "$i") == *"video/"* ]]&&echo "video"&&break;((++count));done) )&&[[ $isvideo != "video" ]]&&(clear;tput cup $(($(tput lines)/3));mpv --audio-display=no -- $fx)||[[ $isvideo != "video" ]]&&exit 0;setsid -f mpv --no-terminal --force-window --quiet -- $fx >/dev/null 2>&1
     ;;
  
     #images -- sends file list of current directory, or selection if multiple files
@@ -170,7 +170,7 @@ cmd openrifle ${{
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f tenacity -- "$f" >/dev/null 2>&1;exit 0)
 ###Other
-#engrampa
+#Ark
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Ark"&&[[ $cnum == $iternum ]]&&(setsid -f ark -- "$f" >/dev/null 2>&1;exit 0)
 
   [[ $iternum == 0 ]]&&break||until [[ $(echo $cnum|grep -E "^[0-9]+$"|wc -l) > 0 || $cnum == "" ]];do echo -n "Open with: "&&read cnum;done
@@ -226,7 +226,7 @@ map s shell
 map S $$SHELL
 map @ push :%<space>"$f"<home><c-f>
 #View processes in htop
-map w $htop -p `pstree -p $KITTY_PID | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }'`
+map w $htop -p "$(for PID in $(pgrep -x lf);do pstree -p $PID | perl -ne 'push @t, /\((\d+)\)/g; END { print join ",", @t }';done)"
 #file handling
 map e
 map E edit
@@ -330,8 +330,8 @@ map p
 map pp :paste; clear
 map pi pasteand skip
 map po pasteand overwrite
-map pl symlink relative
-map pL symlink absolute
+map pl symlink absolute
+map pL symlink relative
 
 # sort keybinds
 map sn
