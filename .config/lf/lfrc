@@ -54,9 +54,9 @@ cmd extract !{{
     *.tar)tar xfv "$i" --one-top-level;;
     *.tbz2)tar xjfv "$i" --one-top-level;;
     *.tgz)tar xzfv "$i" --one-top-level;;
-    *.zip)dir="./$(basename -- ${i%.zip})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.zip})~$num~"&&num=$((++num));done;unzip -d$dir -x "$i";;
-    *.rar)dir="./$(basename -- ${i%.rar})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.rar})~$num~"&&num=$((++num));done;unrar x -op$dir "$i";;
-    *.7z)dir="./$(basename -- ${i%.7z})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.7z})~$num~"&&num=$((++num));done;7z x "$i" -o$dir;;
+    *.zip)dir="./$(basename -- ${i%.zip})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.zip})~$num~"&&((++num));done;unzip -d$dir -x "$i";;
+    *.rar)dir="./$(basename -- ${i%.rar})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.rar})~$num~"&&((++num));done;unrar x -op$dir "$i";;
+    *.7z)dir="./$(basename -- ${i%.7z})"&&[ -d "$dir" ]&&num=1&&until [ ! -d "./$dir" ];do dir="$(basename -- ${i%.7z})~$num~"&&((++num));done;7z x "$i" -o$dir;;
     *)echo "Skipping $(basename -- $i)...";;
   esac;done}}
 cmd extractaunpack !set -f&&for file in $fx;do aunpack -- $file;done
@@ -108,8 +108,8 @@ cmd open ${{
       glow -s dark -- "$f" | "$PAGER"
     ;;
 
-    # mimetype
-    #text
+    #mimetype
+    ##text
     text/*|application/json*|inode/x-empty*)
       $EDITOR -- "$f" 
     ;;
@@ -205,7 +205,7 @@ cmd symlink &{{
     lf -remote "send $id echo no files to link"
     exit 0
   fi
-  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&num=$((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath -s --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
+  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;[[ "$linktype" == "relative" ]]&&ln -sr -T "$(realpath -s --relative-to=$PWD -- $i)" -- "./$f"||ln -s -T "$i" -- "./$f";done
   echo "$1">~/.local/share/lf/files
   lf -remote "send $id :clear; reload"
 }}
