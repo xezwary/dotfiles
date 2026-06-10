@@ -177,6 +177,15 @@ cmd openrifle ${{
 done;clear
 }}
 
+cmd paste &{{
+  set -- $(cat ~/.local/share/lf/files)
+  mode="$1"
+  shift
+  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;rsync -av --ignore-existing --progress -- "$([ -d "$i" ]&&echo "$i/"&&mkdir "$f"||echo "$i")" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
+  echo "$mode">~/.local/share/lf/files
+  lf -remote "send $id clear"
+}}
+
 #paste, with option for overwrite or skip, copy shows progress
 cmd pasteand &{{
   overwrite="$1"
@@ -327,7 +336,7 @@ map df !{{#File system space usage
 
 # paste keybinds
 map p
-map pp :paste; clear
+map pp :paste
 map pi pasteand skip
 map po pasteand overwrite
 map pl symlink absolute
