@@ -64,7 +64,7 @@ cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
 # open handler
 cmd open ${{
-  ext="$(echo ${f##*.}|sed 's/.*/\L&/')"&&if [[ "$ext" == "$(echo $f|sed 's/.*/\L&/')" ]];then ext="";fi&&mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
+  ext="$(echo ${f##*.}|sed 's/.*/\L&/')"&&[[ "$ext" == "$(echo $f|sed 's/.*/\L&/')" ]]&&ext="";mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
     #torrents
     *.torrent)
       transmission-show "$f" | "$PAGER"
@@ -181,7 +181,14 @@ cmd paste &{{
   set -- $(cat ~/.local/share/lf/files)
   mode="$1"
   shift
-  for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;rsync -av --ignore-existing --progress -- "$([ -d "$i" ]&&echo "$i/"&&mkdir "$f"||echo "$i")" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
+  case "$mode" in
+    copy)
+      for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;rsync -av --ignore-existing --progress -- "$([ -d "$i" ]&&echo "$i/"&&mkdir "$f"||echo "$i")" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
+    ;;
+    move)
+      for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;mv -f -- "$i" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
+    ;;
+  esac
   echo "$mode">~/.local/share/lf/files
   lf -remote "send $id clear"
 }}
