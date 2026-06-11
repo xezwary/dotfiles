@@ -61,7 +61,7 @@ cmd extractunar !set -f&&for file in $fx;do unar -d -- $file;done
 
 # open handler
 cmd open ${{
-  ext="$(echo ${f##*.}|sed 's/.*/\L&/')"&&[[ "$ext" == "$(echo $f|sed 's/.*/\L&/')" ]]&&ext="";mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:${ext}" in
+  ext="$(echo ${f##*.}|sed 's/.*/\L&/')"&&[[ "$ext" == "$(echo $f|sed 's/.*/\L&/')" ]]&&ext="";mime=$(file --mime-type -Lb -- "$f")&&case "${mime}:.${ext}" in
     #torrents
     *.torrent)
       transmission-show "$f" | "$PAGER"
@@ -99,7 +99,7 @@ cmd open ${{
 
     #Documents
     *.pdf)
-      setsid -f zathura -- "$f"
+      setsid -f zathura -- "$f" >/dev/null 2>&1
     ;;
     *.md)
       glow -s dark -- "$f" | "$PAGER"
@@ -132,13 +132,13 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
 ##Documents
 #Zathura
-  [[ $(echo $f1|grep -E "\.pdf$|\.epub$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f";exit 0)
+  [[ $(echo $f1|grep -E "\.pdf$|\.epub$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
 #Libreoffice
   [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&(setsid -f libreoffice "$f";exit 0)
 #MComix
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&(setsid -f mcomix -- "$f" >/dev/null 2>&1;exit 0)
 #Zathura - comics
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f";exit 0)
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
 #Calibre ebook-viewer
   [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&(ebook-viewer --detach -- "$f";exit 0)
 #unar
@@ -166,6 +166,8 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mka$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 || $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MPV --no-video"&&[[ $cnum == $iternum ]]&&(clear&&mpv --no-video -- $fx;exit 0)
 #MPV force window
   [[ $(echo $f1|grep -E "\.mp4$|\.webm$|\.mkv$|\.mka$|\.mp3$|\.flac$|\.m4a$|\.m4v$|\.aac$|\.ogg$|\.wav$|\.wmv$|\.avi$|\.ts$|\.m3u$|\.pls$"|wc -l) > 0 || $(echo $fmime|grep -E "video/|audio/"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MPV --force-window"&&[[ $cnum == $iternum ]]&&(clear&&setsid -f mpv --force-window --no-terminal --quiet -- $fx >/dev/null 2>&1;exit 0)
+#DeaDBeeF
+  [[ $(echo $f1|grep -E "\.m3u$|\.pls$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - DeaDBeeF"&&[[ $cnum == $iternum ]]&&(setsid -f deadbeef -- $f >/dev/null 2>&1;exit 0)
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f tenacity -- "$f" >/dev/null 2>&1;exit 0)
 ###Other
