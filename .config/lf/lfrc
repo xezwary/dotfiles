@@ -76,9 +76,6 @@ cmd open ${{
     *.iso)
       iso-info -l -i -- "$f" | "$PAGER"
     ;;
-    *.cbr|*.cbt|*.cbz|*.cb7)
-      setsid -f mcomix -- "$f" >/dev/null 2>&1
-    ;;
 
     #video/audio -- force gui window if video files are present
     video/*|audio/*|*.mp4|*.webm|*.mkv|*.mka|*.mp3|*.flac|*.m4a|*.m4v|*.aac|*.ogg|*.wav|*.wmv|*.avi|*.ts|*.m3u|*.pls)
@@ -98,7 +95,7 @@ cmd open ${{
     ;;
 
     #Documents
-    *.pdf)
+    *.cbr|*.cbt|*.cbz|*.cb7|*.pdf)
       setsid -f zathura -- "$f" >/dev/null 2>&1
     ;;
     *.md)
@@ -123,26 +120,22 @@ cmd openrifle ${{
 ##Torrents
   #[[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - transadd"&&[[ $cnum == $iternum ]]&&(transadd "$f"&&clear;exit 0)
   [[ $(echo $f|grep -E "\.torrent$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - qbittorrent"&&[[ $cnum == $iternum ]]&&(setsid -f qbittorrent "$f";exit 0)
-##Archives
-#unar
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
-#aunpack
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractaunpack";exit 0)
-#extract command
-  [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
 ##Documents
 #Zathura
-  [[ $(echo $f1|grep -E "\.pdf$|\.epub$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
+  [[ $(echo $f1|grep -E "\.cbz$|\.cbr$|\.cbt$|\.pdf$|\.epub$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
 #Libreoffice
   [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&(setsid -f libreoffice "$f";exit 0)
 #MComix
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&(setsid -f mcomix -- "$f" >/dev/null 2>&1;exit 0)
-#Zathura - comics
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
 #Calibre ebook-viewer
   [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&(ebook-viewer --detach -- "$f";exit 0)
+##Archives
 #unar
-  [[ $(echo $f1|grep -E "\.pdf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pdf$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.iso$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - unar"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractunar";exit 0)
+#aunpack
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - aunpack"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extractaunpack";exit 0)
+#extract command
+  [[ $(echo $f1|grep -E "\.rar$|\.zip$|\.7z$|\.bz2$|\.gz$|\.tbz2$|\.tar$|\.tgz$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - extract"&&[[ $cnum == $iternum ]]&&(lf -remote "send $id extract";exit 0)
 ##Executables
 #Wine
   #[[ $(echo $f1|grep -E "\.exe$|\.x86$|\.x86_64$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Wine"&&[[ $cnum == $iternum ]]&&(DRI_PRIME=1 VKD3D_FEATURE_LEVEL=12_1 VKD3D_CONFIG=dxr,dxr11 RADV_PERFTEST_RT=1 setsid -f gamemoderun wine "$f" >/dev/null 2>&1;exit 0)
@@ -187,7 +180,7 @@ cmd paste &{{
       for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;rsync -av --ignore-existing --progress -- "$([ -d "$i" ]&&echo "$i/"&&mkdir "$f"||echo "$i")" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
     ;;
     move)
-      for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;mv -f -- "$i" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
+      for ((i=1;i<=$#;i++));do f=$(basename "${!i}")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename ${!i})~$num~"&&((++num));done;lf -remote "send $id echo Moving $i/$#"&&mv -f -- "${!i}" "$f";done;lf -remote "send $id echo Done."
     ;;
   esac
   echo "$mode">~/.local/share/lf/files
@@ -208,7 +201,7 @@ cmd pasteand &{{
         lf -remote "send $id echo $line"
       done
     ;;
-    move)mv $([[ $overwrite == 'skip' ]]&&echo "-n"||echo "-f") -- "$@" .|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;;
+    move)for ((i=1;i<=$#;i++));do lf -remote "send $id echo Moving $i/$#"&&mv $([[ $overwrite == 'skip' ]]&&echo "-n"||echo "-f") -- "${!i}" . ;done;lf -remote "send $id echo Done.";;
   esac
   echo "$mode">~/.local/share/lf/files
   lf -remote "send $id clear"
@@ -339,8 +332,8 @@ map du ${{#Directory disk usage
   clear&&du --max-depth=1 -h --apparent-size|less}}
 map dU ${{#Directory disk usage sorted
   clear&&du --max-depth=1 -h --apparent-size | sort -rh|less}}
-map df !{{#File system space usage
-  clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "}}
+map df ${{#File system space usage
+  clear&&df -h |grep -E "/dev/sd|/dev/nvme|Filesystem "|less}}
 
 # paste keybinds
 map p
