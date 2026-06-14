@@ -180,7 +180,9 @@ cmd paste &{{
       for i in "$@";do f=$(basename "$i")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename $i)~$num~"&&((++num));done;rsync -av --ignore-existing --progress -- "$([ -d "$i" ]&&echo "$i/"&&mkdir "$f"||echo "$i")" "$f"|stdbuf -i0 -o0 -e0 tr '\r' '\n'|while IFS= read -r line;do lf -remote "send $id echo $line";done;done
     ;;
     move)
-      for ((i=1;i<=$#;i++));do f=$(basename "${!i}")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename ${!i})~$num~"&&((++num));done;lf -remote "send $id echo Moving $i/$#"&&mv -f -- "${!i}" "$f";done;lf -remote "send $id echo Done."
+      for ((i=1;i<=$#;i++));do f=$(basename "${!i}")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename ${!i})~$num~"&&((++num));done;
+        mv -f -- "${!i}" "$f"&
+      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep .1;done;done;lf -remote "send $id echo Done."
     ;;
   esac
   echo "$mode">~/.local/share/lf/files
@@ -201,7 +203,8 @@ cmd pasteand &{{
         lf -remote "send $id echo $line"
       done
     ;;
-    move)for ((i=1;i<=$#;i++));do lf -remote "send $id echo Moving $i/$#"&&mv $([[ $overwrite == 'skip' ]]&&echo "-n"||echo "-f") -- "${!i}" . ;done;lf -remote "send $id echo Done.";;
+    move)for ((i=1;i<=$#;i++));do mv $([[ $overwrite == 'skip' ]]&&echo "-n"||echo "-f") -- "${!i}" . &
+      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep .1;done;done;lf -remote "send $id echo Done.";;
   esac
   echo "$mode">~/.local/share/lf/files
   lf -remote "send $id clear"
