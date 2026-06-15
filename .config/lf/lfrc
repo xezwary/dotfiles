@@ -125,8 +125,6 @@ cmd openrifle ${{
   [[ $(echo $f1|grep -E "\.cbz$|\.cbr$|\.cbt$|\.pdf$|\.epub$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Zathura"&&[[ $cnum == $iternum ]]&&(setsid -f zathura -- "$f" >/dev/null 2>&1;exit 0)
 #Libreoffice
   [[ $(echo $f1|grep -E "\.pptx?$|\.od[dfgpst]$|\.docx?$|\.sxc$|\.xlsx?$|\.xlt$|\.xltx$|\.xlw$|\.gnm$|\.gnumeric$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Libreoffice"&&[[ $cnum == $iternum ]]&&(setsid -f libreoffice "$f";exit 0)
-#MComix
-  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&(setsid -f mcomix -- "$f" >/dev/null 2>&1;exit 0)
 #Calibre ebook-viewer
   [[ $(echo $f1|grep -E "\.azw$|\.azw1$|\.azw2$|\.azw3$|\.cbr$|\.cbz$|\.docx$|\.epub$|\.mobi$|\.odt$|\.pdf$|\.rtf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Calibre"&&[[ $cnum == $iternum ]]&&(ebook-viewer --detach -- "$f";exit 0)
 ##Archives
@@ -164,6 +162,8 @@ cmd openrifle ${{
 #Tenacity
   [[ $(echo $fmime|grep "audio/"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Tenacity"&&[[ $cnum == $iternum ]]&&(setsid -f tenacity -- "$f" >/dev/null 2>&1;exit 0)
 ###Other
+#MComix
+  [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.pdf$"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - MComix"&&[[ $cnum == $iternum ]]&&(setsid -f mcomix -- "$f" >/dev/null 2>&1;exit 0)
 #Ark
   [[ $(echo $f1|grep -E "\.cbr$|\.cbt$|\.cbz$|\.cb7$|\.rar$|\.zip$|\.7z$|\.ace$|\.ar$|\.arc$|\.tbz$|\.tbz2$|\.bz2$|\.cab$|\.cpio$|\.cpt$|\.deb$|\.dgc$|\.dmg$|\.gz$|\.jar$|\.msi$|\.pkg$|\.shar$|\.tar$|\.tgz$|\.xar$|\.xpi$|\.xz$|\.zst$"|wc -l) > 0 || $(echo $fmime|grep -E "/zip|/vnd.rar|/x-7z-compressed|/gzip"|wc -l) > 0 ]]&&((++iternum))&&echo "$iternum - Ark"&&[[ $cnum == $iternum ]]&&(setsid -f ark -- "$f" >/dev/null 2>&1;exit 0)
 
@@ -182,7 +182,7 @@ cmd paste &{{
     move)
       for ((i=1;i<=$#;i++));do f=$(basename "${!i}")&&[[ -e "./$f" || -L "./$f" ]]&&num=1&&until [[ ! -e "./$f" && ! -L "./$f" ]];do f="$(basename ${!i})~$num~"&&((++num));done;
         mv -f -- "${!i}" "$f"&
-      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep .1;done;done;lf -remote "send $id echo Done."
+      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep 1;done;done;lf -remote "send $id echo Done."
     ;;
   esac
   echo "$mode">~/.local/share/lf/files
@@ -204,7 +204,7 @@ cmd pasteand &{{
       done
     ;;
     move)for ((i=1;i<=$#;i++));do mv $([[ $overwrite == 'skip' ]]&&echo "-n"||echo "-f") -- "${!i}" . &
-      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep .1;done;done;lf -remote "send $id echo Done.";;
+      PID=$!&&while kill -0 "$PID" 2>/dev/null;do lf -remote "send $id echo Moving $i/$#";sleep 1;done;done;lf -remote "send $id echo Done.";;
   esac
   echo "$mode">~/.local/share/lf/files
   lf -remote "send $id clear"
